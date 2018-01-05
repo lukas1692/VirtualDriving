@@ -1,3 +1,10 @@
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+Library/
+ProjectSettings/ProjectVersion.txt
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -32,3 +39,18 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+UnityVS
+/Assets/UnityVS.meta
+
+BuildWebGL/
