@@ -48,25 +48,25 @@ public class CarSwitcher : MonoBehaviour
 
 			Transform closest = spawnPoints.GetChild(0);
 
-			// Find the closest spawn point.
-			for (int i = 0; i < spawnPoints.childCount; ++i)
-			{
-				Transform thisTransform = spawnPoints.GetChild(i);
+            // Find the closest spawn point.
+            for (int i = 0; i < spawnPoints.childCount; ++i)
+            {
+                Transform thisTransform = spawnPoints.GetChild(i);
 
-				float distanceToClosest = Vector3.Distance(closest.position, vehicleTransform.position);
-				float distanceToThis = Vector3.Distance(thisTransform.position, vehicleTransform.position);
+                float distanceToClosest = Vector3.Distance(closest.position, vehicleTransform.position);
+                float distanceToThis = Vector3.Distance(thisTransform.position, vehicleTransform.position);
 
-				if (distanceToThis < distanceToClosest)
-				{
-					closest = thisTransform;
-				}
-			}
+                if (distanceToThis < distanceToClosest)
+                {
+                    closest = thisTransform;
+                }
+            }
 
-			// Spawn at the closest spawn point.
+            //Spawn at the closest spawn point.
 #if UNITY_EDITOR
-			Debug.Log("Teleporting to " + closest.name);
+            Debug.Log("Teleporting to " + closest.name);
 #endif
-			vehicleTransform.rotation = closest.rotation;
+            vehicleTransform.rotation = closest.rotation;
 
 			// Try refining the spawn point so it's closer to the ground.
             // Here we assume there is only one renderer.  If not, looping over all the bounds could do the trick.
