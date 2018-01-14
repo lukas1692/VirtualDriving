@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FinishLineScript : MonoBehaviour {
 
+
+
 	// Use this for initialization
 	void Start () {
 		
@@ -17,5 +19,8 @@ public class FinishLineScript : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         LapTimeController.ResetLapTime();
+        
     }
+
+
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public enum DriveType
@@ -8,6 +9,17 @@ public enum DriveType
     FrontWheelDrive,
     AllWheelDrive
 }
+
+public struct GhostEvent
+{
+    public Vector3 position;
+    public Quaternion rotation;
+    public Vector3 velocity;
+
+    public float angle;
+    public float torque;
+    public float laptime;
+};
 
 public class WheelDrive : MonoBehaviour
 {
@@ -32,10 +44,17 @@ public class WheelDrive : MonoBehaviour
 
     private WheelCollider[] m_Wheels;
 
+    public static List<GhostEvent> replayCarEventStream = new List<GhostEvent>();
+    public static List<GhostEvent> replayGhostEventStream = new List<GhostEvent>();
+
+    Rigidbody rigid;
+
     // Find all the WheelColliders down in the hierarchy.
-	void Start()
+    void Start()
 	{
-		m_Wheels = GetComponentsInChildren<WheelCollider>();
+        rigid = GetComponent<Rigidbody>();
+
+        m_Wheels = GetComponentsInChildren<WheelCollider>();
 
 		for (int i = 0; i < m_Wheels.Length; ++i) 
 		{
@@ -97,4 +116,33 @@ public class WheelDrive : MonoBehaviour
 			}
 		}
 	}
+    private void FixedUpdate()
+    {
+        Vector3 position = rigid.position;
+        Quaternion rotation = rigid.rotation;
+        Vector3 velocity = rigid.velocity;
+       
+
+        GhostEvent ghost = new GhostEvent();
+        ghost.position = rigid.position;
+        ghost.rotation = rigid.rotation;
+        ghost.laptime = LapTimeController.getCurrentTime();
+
+        //Debug.Log(ghost.position + ", " + ghost.laptime);
+
+        replayCarEventStream.Add(ghost);
+    }
+
+    public static void startNewGhost()
+    {
+        replayGhostEventStream = new List<GhostEvent>(replayCarEventStream);
+        replayCarEventStream = new List<GhostEvent>();
+
+        GhostCarScript.startGhost();
+    }
+
+    public static void clearGhostHistory()
+    {
+        replayCarEventStream = new List<GhostEvent>();
+    }
 }
