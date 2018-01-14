@@ -11,6 +11,7 @@ using System;
 /// </summary> 
 public class GraphOverlay : MonoBehaviour
 {
+
     [Serializable]
     public class WheelConfig
     {
@@ -51,7 +52,7 @@ public class GraphOverlay : MonoBehaviour
     const int k_InfoFontSize = 16;
     const float k_MaxRecordTimeTravel = 0.01f;
 
-	void Start()
+    void Start()
 	{
 		// Add GUI infrastructure.
         var eventSystem = new GameObject(k_EventSystemName);	
