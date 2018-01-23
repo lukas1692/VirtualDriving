@@ -1756,7 +1756,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 705913683}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 325, y: 110, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1848,7 +1848,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 732048488}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 459, y: 246.5, z: 0}
+  m_LocalPosition: {x: 459, y: 246, z: 0}
   m_LocalScale: {x: 1.1475, y: 1.1475, z: 1.1475}
   m_Children:
   - {fileID: 2070573756}
@@ -3454,7 +3454,6 @@ GameObject:
   - component: {fileID: 1692987686}
   - component: {fileID: 1692987689}
   - component: {fileID: 1692987688}
-  - component: {fileID: 1692987687}
   m_Layer: 0
   m_Name: MiniMap Camera
   m_TagString: Untagged
@@ -3475,13 +3474,6 @@ Transform:
   m_Father: {fileID: 606341601}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!81 &1692987687
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1692987685}
-  m_Enabled: 1
 --- !u!124 &1692987688
 Behaviour:
   m_ObjectHideFlags: 0
@@ -4223,6 +4215,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LapTimeTextField: {fileID: 1261715943}
+  LapTimeDifferenceTextField: {fileID: 0}
+  NrOfCheckpoints: 0
 --- !u!4 &1809767478 stripped
 Transform:
   m_PrefabParentObject: {fileID: 437110, guid: 3ece98cef98dc3a48a6beb9c58333554, type: 2}
@@ -4855,7 +4849,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2070573755}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0000038146973, y: 160.51482, z: 3.5}
+  m_LocalPosition: {x: 0.0000038146973, y: 160.07909, z: 3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1261715942}

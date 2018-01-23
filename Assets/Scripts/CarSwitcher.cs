@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class CarSwitcher : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class CarSwitcher : MonoBehaviour
 
 	private DriftCamera m_DriftCamera;
 	private int m_VehicleId;
+
+    private static int scene_num = 0;
 
 	void Start () 
     {
@@ -91,5 +94,28 @@ public class CarSwitcher : MonoBehaviour
 			vehicleBody.velocity = Vector3.zero;
 			vehicleBody.angularVelocity = Vector3.zero;
 		}
+
+        if(Input.GetKeyUp(KeyCode.N))
+        {
+            Debug.Log("Scene:" + scene_num);
+            switch (scene_num)
+            {
+                case 0:
+                    SceneManager.LoadScene(1);
+                    break;
+                case 1:
+                    SceneManager.LoadScene(2);
+                    break;
+                default:
+                    SceneManager.LoadScene(0);
+                    scene_num = -1;
+                    break;
+
+                    
+            }
+
+            scene_num++;
+
+        }
 	}
 }

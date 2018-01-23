@@ -8,3 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Racetrack1.unity
     guid: b82dcddb4eda1dc4b8ec35609b8d70ba
+  - enabled: 1
+    path: Assets/Scenes/Racetrack3.unity
+    guid: e5d90203c889f3e47ac766230f73b714
+  - enabled: 1
+    path: Assets/Scenes/Paris.unity
+    guid: 3ee2a87810926604caaa5d00b99cb5f3
