@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.IO;
 
 [Serializable]
 public enum DriveType
@@ -24,7 +25,27 @@ public struct GhostEvent
 
 public class WheelDrive : MonoBehaviour
 {
+    private float rpm;
+
+    public int bhp;
+    public float torque;
+
+    public float[] gearRatio;
+    public int currentGear;
+
+    public float currentSpeed;
+    public int maxSpeed;
+    public int maxRevSpeed;
+
+    public float SteerAngle;
+
+    public float engineRPM;
+    public float gearUpRPM;
+    public float gearDownRPM;
+
     public Text speedText;
+
+    public Text currentGearText;
 
     public List<Image> speedStrip;
 
@@ -81,12 +102,31 @@ public class WheelDrive : MonoBehaviour
 	{
 		m_Wheels[0].ConfigureVehicleSubsteps(criticalSpeed, stepsBelow, stepsAbove);
 
-		float angle = maxAngle * Input.GetAxis("Horizontal");
-		float torque = maxTorque * Input.GetAxis("Vertical");
+
+        float angle = maxAngle * Input.GetAxis("Horizontal");
+		//float torque = maxTorque * Input.GetAxis("Vertical");
 
 		float handBrake = Input.GetKey(KeyCode.X) ? brakeTorque : 0;
 
-		foreach (WheelCollider wheel in m_Wheels)
+        rpm = 0;
+
+        foreach (WheelCollider wheel in m_Wheels)
+        {
+            if (wheel.transform.localPosition.z < 0)
+            {
+                rpm = wheel.rpm;
+                break;
+            }
+        }
+
+        AutoGears();
+        Accelerate();
+
+        currentSpeed = GetComponent<Rigidbody>().velocity.magnitude * 3.6f;
+        engineRPM = Mathf.Round((rpm * gearRatio[currentGear]));
+        torque = bhp * gearRatio[currentGear];
+
+        foreach (WheelCollider wheel in m_Wheels)
 		{
 			// A simple car where front wheels steer while rear ones drive.
 			if (wheel.transform.localPosition.z > 0)
@@ -97,15 +137,15 @@ public class WheelDrive : MonoBehaviour
 				wheel.brakeTorque = handBrake;
 			}
 
-			if (wheel.transform.localPosition.z < 0 && driveType != DriveType.FrontWheelDrive)
-			{
-				wheel.motorTorque = torque;
-			}
+			//if (wheel.transform.localPosition.z < 0 && driveType != DriveType.FrontWheelDrive)
+			//{
+			//	wheel.motorTorque = torque;
+			//}
 
-			if (wheel.transform.localPosition.z >= 0 && driveType != DriveType.RearWheelDrive)
-			{
-				wheel.motorTorque = torque;
-			}
+			//if (wheel.transform.localPosition.z >= 0 && driveType != DriveType.RearWheelDrive)
+			//{
+			//	wheel.motorTorque = torque;
+			//}
 
 			// Update visual wheels if any.
 			if (wheelShape) 
@@ -121,6 +161,83 @@ public class WheelDrive : MonoBehaviour
 			}
 		}
 	}
+
+    void Accelerate()
+    {
+        float motorTorque = torque * Input.GetAxis("Vertical");
+
+        foreach (WheelCollider wheel in m_Wheels)
+        {
+            if (currentSpeed < maxSpeed && currentSpeed > maxRevSpeed && engineRPM <= gearUpRPM)
+            {
+                if (wheel.transform.localPosition.z < 0 && driveType != DriveType.FrontWheelDrive)
+                {
+                    wheel.motorTorque = motorTorque;
+                    wheel.brakeTorque = 0;
+                }
+
+                if (wheel.transform.localPosition.z >= 0 && driveType != DriveType.RearWheelDrive)
+                {
+                    wheel.motorTorque = motorTorque;
+                    wheel.brakeTorque = 0;
+                }
+            }
+            else
+            {
+                //if (wheel.transform.localPosition.z < 0)
+                //{
+                wheel.motorTorque = 0;
+                wheel.brakeTorque = brakeTorque;
+                //}
+                
+            }
+
+            if (engineRPM > 0 && Input.GetAxis("Vertical") < 0 && engineRPM <= gearUpRPM)
+            {
+                if(wheel.transform.localPosition.z >= 0)
+                    wheel.brakeTorque = brakeTorque;
+            }
+            else
+            {
+                if (wheel.transform.localPosition.z >= 0)
+                    wheel.brakeTorque = 0;
+            }
+        }
+    }
+
+    void AutoGears()
+    {
+        int appropriateGear = currentGear;
+
+        if (engineRPM >= gearUpRPM)
+        {
+
+            for (var i = 0; i < gearRatio.Length; i++)
+            {
+                if (rpm * gearRatio[i] < gearUpRPM)
+                {
+                    appropriateGear = i;
+                    break;
+                }
+            }
+            currentGear = appropriateGear;
+        }
+
+        if (engineRPM <= gearDownRPM)
+        {
+            appropriateGear = currentGear;
+            for (var j = gearRatio.Length - 1; j >= 0; j--)
+            {
+                if (rpm * gearRatio[j] > gearDownRPM)
+                {
+                    appropriateGear = j;
+                    break;
+                }
+            }
+            currentGear = appropriateGear;
+        }
+    }
+
     private void FixedUpdate()
     {
         Vector3 position = rigid.position;
@@ -138,8 +255,12 @@ public class WheelDrive : MonoBehaviour
         replayCarEventStream.Add(ghost);
 
         speedText.text = string.Format("{0:0}", rigid.velocity.magnitude * 3.6);
-        
-        setSpeedStrip(rigid.velocity.magnitude * 3.6);
+
+        currentGearText.text = string.Format("{0}",currentGear+1);
+
+        setEngineSpeedStrip();
+
+        //setSpeedStrip(rigid.velocity.magnitude * 3.6);
     }
 
     public static void startNewGhost()
@@ -148,6 +269,17 @@ public class WheelDrive : MonoBehaviour
         replayCarEventStream = new List<GhostEvent>();
 
         GhostCarScript.startGhost();
+
+        //string path = "Assets/Resources/test.txt";
+
+        //StreamWriter writer = new StreamWriter(path, true);
+
+        
+        //foreach(var x in replayGhostEventStream)
+        //{
+        //    writer.WriteLine(x.position.x + "," + x.position.y + "," + x.position.z + "," + x.position.x + "," + x.position.y + "," + x.position.z);
+        //}
+        //writer.Close();
     }
 
     public static void clearGhostHistory()
@@ -170,5 +302,20 @@ public class WheelDrive : MonoBehaviour
                 speedStrip[i].GetComponent<Image>().color = new Color(255, 255, 255);
         }
             
+    }
+
+    public void setEngineSpeedStrip()
+    {
+
+        int nr = Convert.ToUInt16(Mathf.Lerp(0, speedStrip.Count, (float)(engineRPM / gearUpRPM)));
+
+        for (int i = 0; i < speedStrip.Count; i++)
+        {
+            if (i < nr)
+                speedStrip[i].GetComponent<Image>().color = new Color(255, 0, 0);
+            else
+                speedStrip[i].GetComponent<Image>().color = new Color(255, 255, 255);
+        }
+
     }
 }
