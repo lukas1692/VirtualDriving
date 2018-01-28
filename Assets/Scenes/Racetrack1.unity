@@ -9204,6 +9204,19 @@ Rigidbody:
   m_PrefabParentObject: {fileID: 54000011937158112, guid: 6577377bae7db18429e690f8f8f57881,
     type: 2}
   m_PrefabInternal: {fileID: 912340882}
+--- !u!114 &1921878863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1921878858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b573a6fda84a0e4e9c9f6b868d45e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CarSounds: []
+  RangeDivider: 4
 --- !u!4 &1934015815 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000012327743680, guid: 6577377bae7db18429e690f8f8f57881,

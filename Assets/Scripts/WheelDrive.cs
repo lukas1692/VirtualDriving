@@ -75,9 +75,15 @@ public class WheelDrive : MonoBehaviour
 
     Rigidbody rigid;
 
+    private SoundScript soundSript;
+
+    private WheelCollider tractionWheel;
+
     // Find all the WheelColliders down in the hierarchy.
     void Start()
 	{
+        soundSript = GetComponent<SoundScript>();
+
         rigid = GetComponent<Rigidbody>();
 
         m_Wheels = GetComponentsInChildren<WheelCollider>();
@@ -93,7 +99,17 @@ public class WheelDrive : MonoBehaviour
 				ws.transform.parent = wheel.transform;
 			}
 		}
-	}
+
+        rpm = 0;
+        foreach (WheelCollider wheel in m_Wheels)
+        {
+            if (wheel.transform.localPosition.z < 0)
+            {
+                tractionWheel = wheel;
+                break;
+            }
+        }
+    }
 
 	// This is a really simple approach to updating wheels.
 	// We simulate a rear wheel drive car and assume that the car is perfectly symmetric at local zero.
@@ -108,16 +124,7 @@ public class WheelDrive : MonoBehaviour
 
 		float handBrake = Input.GetKey(KeyCode.X) ? brakeTorque : 0;
 
-        rpm = 0;
-
-        foreach (WheelCollider wheel in m_Wheels)
-        {
-            if (wheel.transform.localPosition.z < 0)
-            {
-                rpm = wheel.rpm;
-                break;
-            }
-        }
+        rpm = tractionWheel.rpm;
 
         AutoGears();
         Accelerate();
@@ -125,6 +132,8 @@ public class WheelDrive : MonoBehaviour
         currentSpeed = GetComponent<Rigidbody>().velocity.magnitude * 3.6f;
         engineRPM = Mathf.Round((rpm * gearRatio[currentGear]));
         torque = bhp * gearRatio[currentGear];
+
+        soundSript.setSoundRPM(rpm);
 
         foreach (WheelCollider wheel in m_Wheels)
 		{
