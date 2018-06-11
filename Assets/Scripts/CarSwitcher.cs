@@ -106,6 +106,12 @@ public class CarSwitcher : MonoBehaviour
                 case 1:
                     SceneManager.LoadScene(2);
                     break;
+                case 2:
+                    SceneManager.LoadScene(3);
+                    break;
+                case 3:
+                    SceneManager.LoadScene(4);
+                    break;
                 default:
                     SceneManager.LoadScene(0);
                     scene_num = -1;
