@@ -94,6 +94,7 @@ public class LapTimeController : MonoBehaviour
         {
             WheelDrive.clearGhostHistory();
             firstlap = true;
+            startTime = Time.time;
             return;
         }
 
