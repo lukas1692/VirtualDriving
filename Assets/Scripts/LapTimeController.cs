@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public struct CheckPoint
+public struct CheckPointActivation
 {
     public int nr;
     public bool activated;
@@ -37,30 +37,51 @@ public class LapTimeController : MonoBehaviour
     static int nextCheckpoint;
 
 
-    static Dictionary<int, CheckPoint> current_checkpoints = new Dictionary<int, CheckPoint>();
-    static Dictionary<int, CheckPoint> ghost_checkpoints = new Dictionary<int, CheckPoint>();
+    static Dictionary<int, CheckPointActivation> current_checkpoints = new Dictionary<int, CheckPointActivation>();
+    static Dictionary<int, CheckPointActivation> ghost_checkpoints = new Dictionary<int, CheckPointActivation>();
 
     private void Awake()
     {
-        
+        nrcheckpoints = NrOfCheckpoints;
         LapTimeDifferenceTextField.GetComponentInParent<Transform>().parent.gameObject.SetActive(false);
 
-        enabled_checkpoint = false;
+        ResetController();
+    }
 
-        nrcheckpoints = NrOfCheckpoints;
+    public static void ResetController()
+    {
+        Debug.Log("Reset Controller");
+        enabled_checkpoint = false;
+        firstlap = false;
 
         resetCurrentCheckpoints();
 
         // reset ghost checkpoints
+        if (ghost_checkpoints.Count > 0)
+            return;
+
         for (int i = 0; i < nrcheckpoints; i++)
         {
-            CheckPoint newPoint = new CheckPoint();
+            CheckPointActivation newPoint = new CheckPointActivation();
             newPoint.nr = i;
             newPoint.activated = false;
             newPoint.time = 0.0f;
             ghost_checkpoints[i] = newPoint;
         }
+    }
 
+    public static void SetGhost(Lap ghostlap)
+    {
+        ghost_checkpoints = new Dictionary<int, CheckPointActivation>();
+        foreach (CheckPoint cp in ghostlap.checkpoint)
+        {
+            Debug.Log("nr="+cp.nr);
+            CheckPointActivation newPoint = new CheckPointActivation();
+            newPoint.nr = cp.nr;
+            newPoint.activated = true;
+            newPoint.time = cp.time;
+            ghost_checkpoints[cp.nr] = newPoint;
+        }
     }
 
     // Use this for initialization
@@ -92,31 +113,27 @@ public class LapTimeController : MonoBehaviour
     {
         if (!firstlap)
         {
-            WheelDrive.clearGhostHistory();
+            //WheelDrive.clearGhostHistory();
             firstlap = true;
             startTime = Time.time;
+            TestRunController.startFinishLine();
             return;
         }
 
         if (nextCheckpoint != nrcheckpoints)
             return;
 
-        startTime = Time.time;
+        TestRunController.passFinishLine(current_checkpoints);
+
+        //startTime = Time.time;
 
         nextCheckpoint = 0;
 
-        ghost_checkpoints = new Dictionary<int, CheckPoint>(current_checkpoints);
+        //ghost_checkpoints = new Dictionary<int, CheckPointActivation>(current_checkpoints);
 
-        resetCurrentCheckpoints();
-        //for (int i = 0; i < nrcheckpoints; i++)
-        //{
-        //    CheckPoint point = current_checkpoints[i];
-        //    point.activated = false;
-        //    point.time = 0.0f;
-        //    current_checkpoints[i] = point;
-        //}
+        //resetCurrentCheckpoints();
 
-        WheelDrive.startNewGhost();
+        //WheelDrive.startNewGhost();
     }
 
     private string parseTimeString(float time)
@@ -131,7 +148,6 @@ public class LapTimeController : MonoBehaviour
 
         string milliseconds = ((int)((time % 1) * 1000)).ToString();
 
-
         return minutes + ": " + seconds + "." + milliseconds;
     }
 
@@ -144,12 +160,12 @@ public class LapTimeController : MonoBehaviour
     {
         if (nextCheckpoint == nr)
         {
-            CheckPoint point = current_checkpoints[nr];
+            CheckPointActivation point = current_checkpoints[nr];
             point.activated = true;
             point.time = currentTime;
             current_checkpoints[nr] = point;
 
-            CheckPoint ghost_point = ghost_checkpoints[nr];
+            CheckPointActivation ghost_point = ghost_checkpoints[nr];
             if (ghost_point.activated)
             {
                 float ghost_point_time = ghost_point.time;
@@ -161,8 +177,6 @@ public class LapTimeController : MonoBehaviour
                 Debug.Log("Difference: " + checkpoint_time_difference);
 
                 enabled_checkpoint = true;
-
-                
             }
 
             nextCheckpoint++;
@@ -173,7 +187,7 @@ public class LapTimeController : MonoBehaviour
     {
         for (int i = 0; i < nrcheckpoints; i++)
         {
-            CheckPoint newPoint = new CheckPoint();
+            CheckPointActivation newPoint = new CheckPointActivation();
             newPoint.nr = i;
             newPoint.activated = false;
             newPoint.time = 0.0f;

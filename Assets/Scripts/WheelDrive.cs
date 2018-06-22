@@ -265,6 +265,12 @@ public class WheelDrive : MonoBehaviour
 
         replayCarEventStream.Add(ghost);
 
+        TimeStep step = new TimeStep();
+        step.setPosition(rigid.position);
+        step.setRotation(rigid.rotation);
+        TestRunController.addCurrentTimeStep(step);
+
+
         speedText.text = string.Format("{0:0}", rigid.velocity.magnitude * 3.6);
 
         currentGearText.text = string.Format("{0}",currentGear+1);
@@ -274,29 +280,18 @@ public class WheelDrive : MonoBehaviour
         //setSpeedStrip(rigid.velocity.magnitude * 3.6);
     }
 
-    public static void startNewGhost()
-    {
-        replayGhostEventStream = new List<GhostEvent>(replayCarEventStream);
-        replayCarEventStream = new List<GhostEvent>();
+    //public static void startNewGhost()
+    //{
+    //    replayGhostEventStream = new List<GhostEvent>(replayCarEventStream);
+    //    replayCarEventStream = new List<GhostEvent>();
 
-        GhostCarScript.startGhost();
+    //    //GhostCarScript.startGhost();
+    //}
 
-        //string path = "Assets/Resources/test.txt";
-
-        //StreamWriter writer = new StreamWriter(path, true);
-
-        
-        //foreach(var x in replayGhostEventStream)
-        //{
-        //    writer.WriteLine(x.position.x + "," + x.position.y + "," + x.position.z + "," + x.position.x + "," + x.position.y + "," + x.position.z);
-        //}
-        //writer.Close();
-    }
-
-    public static void clearGhostHistory()
-    {
-        replayCarEventStream = new List<GhostEvent>();
-    }
+    //public static void clearGhostHistory()
+    //{
+    //    replayCarEventStream = new List<GhostEvent>();
+    //}
 
     public void setSpeedStrip(double speed)
     {
