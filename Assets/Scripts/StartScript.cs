@@ -104,4 +104,25 @@ public class StartScript : MonoBehaviour {
     {
         SceneManager.LoadScene(1);
     }
+
+    public void Send()
+    {
+        string name = "Lukas";
+        string mail = "lukas.schabler@student.at";
+        string phone = Time.time.ToString();
+
+        StartCoroutine(Post(name,mail,phone));
+    }
+
+    IEnumerator Post(string name, string mail, string phone)
+    {
+        string Base_URL = "https://docs.google.com/forms/d/e/1FAIpQLSedMhGG0HqdbUbbY52kb3I2fcV-BVygjMiMTess0p-svSd_rQ/formResponse";
+        WWWForm form = new WWWForm();
+        form.AddField("entry.1259224385", name);
+        form.AddField("entry.1892659885", mail);
+        form.AddField("entry.1739626864", phone);
+        byte[] rawData = form.data;
+        WWW www = new WWW(Base_URL, rawData);
+        yield return www;
+    }
 }
