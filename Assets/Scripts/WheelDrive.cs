@@ -259,7 +259,7 @@ public class WheelDrive : MonoBehaviour
         GhostEvent ghost = new GhostEvent();
         ghost.position = rigid.position;
         ghost.rotation = rigid.rotation;
-        ghost.laptime = LapTimeController.getCurrentTime();
+        ghost.laptime = LapTimeController.GetCurrentTime();
 
         //Debug.Log(ghost.position + ", " + ghost.laptime);
 
@@ -268,7 +268,8 @@ public class WheelDrive : MonoBehaviour
         TimeStep step = new TimeStep();
         step.setPosition(rigid.position);
         step.setRotation(rigid.rotation);
-        TestRunController.addCurrentTimeStep(step);
+        step.speed = currentSpeed;
+        TestRunController.AddCurrentTimeStep(step);
 
 
         speedText.text = string.Format("{0:0}", rigid.velocity.magnitude * 3.6);

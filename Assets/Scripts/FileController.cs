@@ -22,7 +22,29 @@ public class FileController
             result = System.IO.File.ReadAllText(filePath);
     }
 
-    public void saveFile(Lap lap)
+    public void DeleteAllFiles()
+    {
+        if (Application.streamingAssetsPath.Contains("://"))
+            return;
+
+        int i = 0;
+        string destination = "";
+        while (true)
+        {
+            destination = Application.streamingAssetsPath + "/save_" + i++ + ".dat";
+            if (File.Exists(destination))
+            {
+                File.Delete(destination);
+            }
+            else
+            {
+                break;
+            }
+
+        }
+    }
+
+    public void SaveFile(Lap lap)
     {
         if (Application.streamingAssetsPath.Contains("://"))
             return;
@@ -38,7 +60,7 @@ public class FileController
             }
         }
 
-        
+
         FileStream file;
 
         if (File.Exists(destination)) file = File.OpenWrite(destination);
@@ -51,7 +73,7 @@ public class FileController
 
     public Lap LoadFile(string nr)
     {
-        string destination = Application.streamingAssetsPath + "/save_"+ nr+ ".dat";
+        string destination = Application.streamingAssetsPath + "/save_" + nr + ".dat";
         FileStream file;
 
         if (File.Exists(destination)) file = File.OpenRead(destination);
@@ -68,18 +90,53 @@ public class FileController
         return data;
     }
 
-    public List<Lap> loadAllFiles()
+    public List<Lap> LoadAllFiles()
     {
         int nr = 0;
         Lap lap;
         List<Lap> ret = new List<Lap>();
 
-        while((lap = LoadFile((nr++).ToString())) != null)
+        while ((lap = LoadFile((nr++).ToString())) != null)
         {
-            Debug.Log(lap.laptime);
             ret.Add(lap);
         }
 
         return ret;
+    }
+
+    public void SaveIndexFile(SceneIndicies indicies)
+    {
+        if (Application.streamingAssetsPath.Contains("://"))
+            return;
+
+        string destination = Application.streamingAssetsPath + "/index.dat";
+
+        FileStream file;
+
+        if (File.Exists(destination)) file = File.OpenWrite(destination);
+        else file = File.Create(destination);
+
+        BinaryFormatter bf = new BinaryFormatter();
+        bf.Serialize(file, indicies);
+        file.Close();
+    }
+
+    public SceneIndicies LoadIndexFile()
+    {
+
+        string destination = Application.streamingAssetsPath + "/index.dat";
+        FileStream file;
+
+        if (File.Exists(destination)) file = File.OpenRead(destination);
+        else
+        {
+            return null;
+        }
+
+        BinaryFormatter bf = new BinaryFormatter();
+        SceneIndicies data = (SceneIndicies)bf.Deserialize(file);
+        file.Close();
+
+        return data;
     }
 }

@@ -6,9 +6,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class StartScript : MonoBehaviour {
+public class LoadSceneScript : MonoBehaviour {
 
     private List<Lap> laps = new List<Lap>();
+
+    private Lap lap = null;
 
     private bool loading = true;
 
@@ -21,7 +23,7 @@ public class StartScript : MonoBehaviour {
     [SerializeField]
     GameObject button;
 
-    IEnumerator Example()
+    IEnumerator LoadAllScenes()
     {
         int nr = 0;
         while(true)
@@ -73,12 +75,45 @@ public class StartScript : MonoBehaviour {
        
     }
 
+    IEnumerator LoadScene(int file_index)
+    {
+        string filePath = System.IO.Path.Combine(Application.streamingAssetsPath, "save_" + file_index.ToString() + ".dat");
+
+        text2.text = filePath;
+
+        byte[] FileBytes = null;
+
+        if (filePath.Contains("://"))
+        {
+            WWW www = new WWW(filePath);
+
+            yield return www;
+
+            if (!string.IsNullOrEmpty(www.error))
+            {
+                text.text = "Loading Index File Failed";
+            }
+            FileBytes = www.bytes;
+            text2.text = "count=" + FileBytes.Length.ToString();
+        }
+        else
+        {
+            FileBytes = File.ReadAllBytes(filePath);
+        }
+
+        BinaryFormatter bf = new BinaryFormatter();
+        MemoryStream MS = new MemoryStream(FileBytes);
+        lap = (Lap)bf.Deserialize(MS);
+
+        loading = false;
+    }
+
     private void FixedUpdate()
     {
         if(!loading)
         {
-            TestRunController.init(laps);
-            text.text = laps.Count.ToString();
+            TestRunController.AddNewGhostLap(lap);
+            text.text = "current mmr = " + lap.mmr.ToString();
             button.gameObject.SetActive(true);
             loading = true;
         }
@@ -86,7 +121,10 @@ public class StartScript : MonoBehaviour {
 
     private void Awake()
     {
-        StartCoroutine(Example());
+        int file_index = TestRunController.GetClosedGhost();
+        
+        StartCoroutine(LoadScene(file_index));
+        //StartCoroutine(LoadAllScenes());
     }
 
     // Use this for initialization
@@ -102,27 +140,6 @@ public class StartScript : MonoBehaviour {
 
     public void StartRun()
     {
-        SceneManager.LoadScene(1);
-    }
-
-    public void Send()
-    {
-        string name = "Lukas";
-        string mail = "lukas.schabler@student.at";
-        string phone = Time.time.ToString();
-
-        StartCoroutine(Post(name,mail,phone));
-    }
-
-    IEnumerator Post(string name, string mail, string phone)
-    {
-        string Base_URL = "https://docs.google.com/forms/d/e/1FAIpQLSedMhGG0HqdbUbbY52kb3I2fcV-BVygjMiMTess0p-svSd_rQ/formResponse";
-        WWWForm form = new WWWForm();
-        form.AddField("entry.1259224385", name);
-        form.AddField("entry.1892659885", mail);
-        form.AddField("entry.1739626864", phone);
-        byte[] rawData = form.data;
-        WWW www = new WWW(Base_URL, rawData);
-        yield return www;
+        SceneManager.LoadScene(2);
     }
 }

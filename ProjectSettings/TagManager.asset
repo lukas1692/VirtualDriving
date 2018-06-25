@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - FinishLine
+  - DataManagment
+  - EventSystem
   layers:
   - Default
   - TransparentFX

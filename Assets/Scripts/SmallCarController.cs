@@ -64,7 +64,7 @@ public class SmallCarController : MonoBehaviour {
 
             ApplyLocalPositionToVisuals(info);
         }
-        engineSound();
+        EngineSound();
     }
 
     public void ApplyLocalPositionToVisuals(SmallCarCargoInfo wheelPair)
@@ -84,7 +84,7 @@ public class SmallCarController : MonoBehaviour {
 
     }
 
-    private void engineSound()
+    private void EngineSound()
     {
         int next_gear;
         for (next_gear = 0; next_gear < gearRatio.Count; next_gear++)

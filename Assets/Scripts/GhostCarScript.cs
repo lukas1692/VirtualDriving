@@ -12,39 +12,14 @@ public class GhostCarScript : MonoBehaviour {
     private static bool ghost_enabled = false;
 
     [SerializeField]
-    Text path;
-
-    private string result = "";
-
-    [SerializeField]
     public GameObject wheelShape;
 
     private WheelCollider[] m_Wheels;
 
-    IEnumerator Example()
-    {
-        string filePath = System.IO.Path.Combine(Application.streamingAssetsPath, "MyFile.txt");
-
-        path.text = "Out1: " + filePath + "\n" + result;
-
-        if (filePath.Contains("://"))
-        {
-            WWW www = new WWW(filePath);
-            yield return www;
-            result = www.text;
-        }
-        else
-            result = System.IO.File.ReadAllText(filePath);
-
-        path.text = "Out2: "+ filePath + "\n"+ result;
-    }
-
     // Use this for initialization
     void Start () {
 
-        //m_Wheels = GetComponentsInChildren<WheelCollider>();
         m_Wheels = transform.parent.GetComponentsInChildren<WheelCollider>();
-        Debug.Log("wheels = "+m_Wheels.Length);
         for (int i = 0; i < m_Wheels.Length; ++i)
         {
             var wheel = m_Wheels[i];
@@ -78,25 +53,6 @@ public class GhostCarScript : MonoBehaviour {
     }
     private void FixedUpdate()
     {
-        //if (WheelDrive.replayGhostEventStream.Count <= ghostStreamIndex)
-        //    return;
-
-        //if (ghostRound > 0)
-        //{
-        //    GetComponent<MeshRenderer>().enabled = true;
-        //}
-        //else
-        //{
-        //    GetComponent<MeshRenderer>().enabled = false;
-        //    return;
-        //}
-
-
-        //GhostEvent current = WheelDrive.replayGhostEventStream[ghostStreamIndex];
-
-        //transform.position = current.position;
-        //transform.rotation = current.rotation;
-
         if (ghost_lap == null)
             return;
 
@@ -105,12 +61,14 @@ public class GhostCarScript : MonoBehaviour {
 
         if (ghost_enabled)
         {
-            //GetComponentInChildren<MeshRenderer>().enabled = true;
             GetComponent<MeshRenderer>().enabled = true;
         }
         else
         {
-            GetComponent<MeshRenderer>().enabled = false;
+            // Todo: disable wheels 
+           // GetComponent<MeshRenderer>().enabled = false;
+            //Destroy(transform.parent.gameObject);
+            
             return;
         }
 
@@ -123,7 +81,7 @@ public class GhostCarScript : MonoBehaviour {
 
     }
 
-    public static void startGhost(Lap ghost)
+    public static void StartGhost(Lap ghost)
     {
         ghost_lap = ghost;
         ghostRound++;

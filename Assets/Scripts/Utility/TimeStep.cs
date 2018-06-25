@@ -39,10 +39,12 @@ public class TimeStep {
     public float time;
     public float speed;
 
-    public string toString()
+    public string positionToString()
     {
         string ret = "";
-
+        ret += position.x.ToString("N1") + " ";
+        ret += position.y.ToString("N1") + " ";
+        ret += position.z.ToString("N1") + " ";
         return ret;
     }
 

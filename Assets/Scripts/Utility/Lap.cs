@@ -8,19 +8,67 @@ public class Lap {
     public List<TimeStep> timestep = new List<TimeStep>();
     public List<CheckPoint> checkpoint = new List<CheckPoint>();
     public float laptime;
-    public string scenarioname;
+    public ScenarioType scene_type;
     public int mmr;
 
-    public void addCheckpoints(Dictionary<int, CheckPointActivation> checkpoints)
+    public Lap(ScenarioType scene, int curent_mmr)
     {
-        Debug.Log("addCheckpoints");
+        scene_type = scene;
+        mmr = curent_mmr;
+    }
+
+    public void AddCheckpoints(Dictionary<int, CheckPointActivation> checkpoints)
+    {
+
         foreach (var i in checkpoints.Values)
         {
-            Debug.Log("point nr=" + i.nr);
+
             CheckPoint point = new CheckPoint();
             point.nr = i.nr;
             point.time = i.time;
             checkpoint.Add(point);
         }
+
+    }
+
+    public string PositionToString()
+    {
+        string ret = "";
+
+        for (int i = 0; i < timestep.Count; i++)
+        {
+            if(i%10 == 0)
+            {
+                ret += timestep[i].positionToString();
+            }   
+        }
+        return ret;
+    }
+
+    public string TimeToString()
+    {
+        string ret = "";
+
+        for (int i = 0; i < timestep.Count; i++)
+        {
+            if (i % 10 == 0)
+            {
+                ret += timestep[i].time.ToString("N1") + " ";
+            }
+        }
+        return ret;
+    }
+    public string SpeedToString()
+    {
+        string ret = "";
+
+        for (int i = 0; i < timestep.Count; i++)
+        {
+            if (i % 10 == 0)
+            {
+                ret += timestep[i].speed.ToString("N1") + " ";
+            }
+        }
+        return ret;
     }
 }

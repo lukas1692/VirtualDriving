@@ -9,20 +9,23 @@ EditorBuildSettings:
     path: Assets/Scenes/Racetrack1.unity
     guid: b82dcddb4eda1dc4b8ec35609b8d70ba
   - enabled: 0
-    path: Assets/Scenes/Racetrack1Rain.unity
+    path: Assets/Scenes/Legacy/Racetrack1Rain.unity
     guid: fe1e4f5311ccb8d40a28610f5585ae40
   - enabled: 0
-    path: Assets/Scenes/Racetrack1Night.unity
+    path: Assets/Scenes/Legacy/Racetrack1Night.unity
     guid: 3bcb331ac3ad88b47951c14a7ee33f34
   - enabled: 0
     path: Assets/Scenes/RacetrackSand.unity
     guid: 6239d14cb69b3a34991de37da5caa698
   - enabled: 0
-    path: Assets/Scenes/RaceTrackParis.unity
+    path: Assets/Scenes/Legacy/RaceTrackParis.unity
     guid: 92bad5a1932246847a5f3c249840391d
   - enabled: 1
     path: Assets/Scenes/Start.unity
     guid: d7239fed8d7d0da49acf9eb96d1564c4
+  - enabled: 1
+    path: Assets/Scenes/LoadTrack.unity
+    guid: 7e5aa444d2007234d95aa5545bd6836e
   - enabled: 1
     path: Assets/Scenes/Racetrack3.unity
     guid: 947390e3ceda9eb4a941e98c3ddb1e1e
