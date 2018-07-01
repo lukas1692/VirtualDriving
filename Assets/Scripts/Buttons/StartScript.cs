@@ -87,6 +87,6 @@ public class StartScript : MonoBehaviour {
 
     public void StartRun()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(ScenarioNr.LOADTRACK.ToString());
     }
 }

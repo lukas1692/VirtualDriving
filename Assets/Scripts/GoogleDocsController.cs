@@ -37,4 +37,27 @@ public class GoogleDocsController : MonoBehaviour {
 
         TestRunController.TriggerNextScene();
     }
+
+    public void UploadLapQuestionary(GDocsQuestionaryEntry entry)
+    {
+        Debug.Log("uploaded questionary to google docs");
+
+        StartCoroutine(PostLapQuestionary(entry.id, entry.round, entry.high, entry.medium, entry.low));
+    }
+
+    IEnumerator PostLapQuestionary(string id, int round, string high, string medium, string low)
+    {
+        string Base_URL = "https://docs.google.com/forms/d/e/1FAIpQLSemXH8zwVc8uisy4aLUW990i9BBcLqR0R89U_UDDMsBoTvWPw/formResponse";
+        WWWForm form = new WWWForm();
+        form.AddField("entry.1233701858", id);
+        form.AddField("entry.1049965446", round);
+        form.AddField("entry.1952122733", high);
+        form.AddField("entry.600115171", medium);
+        form.AddField("entry.462399844", low);
+        WWW www = new WWW(Base_URL, form.data);
+        yield return www;
+
+        GameObject datamanager = GameObject.FindGameObjectWithTag("DataManagment");
+        datamanager.SendMessage("EmotionsTriggerNextScene");
+    }
 }

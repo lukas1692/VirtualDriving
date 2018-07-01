@@ -7,6 +7,9 @@ TagManager:
   - FinishLine
   - DataManagment
   - EventSystem
+  - High
+  - Medium
+  - Low
   layers:
   - Default
   - TransparentFX

@@ -10,8 +10,6 @@ public class CarSwitcher : MonoBehaviour
 	private DriftCamera m_DriftCamera;
 	private int m_VehicleId;
 
-    private static int scene_num = 0;
-
 	void Start () 
     {
 		m_DriftCamera = GetComponent<DriftCamera>();
@@ -95,33 +93,5 @@ public class CarSwitcher : MonoBehaviour
 			vehicleBody.angularVelocity = Vector3.zero;
 		}
 
-        if(Input.GetKeyUp(KeyCode.N))
-        {
-            Debug.Log("Scene:" + scene_num);
-            switch (scene_num)
-            {
-                case 0:
-                    SceneManager.LoadScene(1);
-                    break;
-                case 1:
-                    SceneManager.LoadScene(2);
-                    break;
-                case 2:
-                    SceneManager.LoadScene(3);
-                    break;
-                case 3:
-                    SceneManager.LoadScene(4);
-                    break;
-                default:
-                    SceneManager.LoadScene(0);
-                    scene_num = -1;
-                    break;
-
-                    
-            }
-
-            scene_num++;
-
-        }
 	}
 }

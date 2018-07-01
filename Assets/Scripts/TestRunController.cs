@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class TestRunController
 {
-    static public TestRun run = new TestRun();
+    static private TestRun run = new TestRun();
     static public List<Lap> ghostlaps = new List<Lap>();
 
     static public Lap current_ghost;
@@ -20,6 +20,11 @@ public class TestRunController
     static public int mmr = 1000;
 
     static public SceneIndicies scene_indecies = null;
+
+    public static int GetCurrentRound()
+    {
+        return run.GetCurrentRound();
+    }
 
     public static void Init(List<Lap> laps)
     {
@@ -71,7 +76,7 @@ public class TestRunController
     public static void TriggerNextScene()
     {
         // called when upload is finished
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(ScenarioNr.WHEELOFEMOTIONS.ToString());
         Time.timeScale = 1f;
     }
 
@@ -104,19 +109,14 @@ public class TestRunController
         int lammda = 400;
         int ra = current;
         int rb = ghost;
-        int k = 32;
-
-        Debug.Log("ra="+ra);
-        Debug.Log("rb="+rb);
-        Debug.Log("sa="+sa);
+        //int k = 32;
+        int k = 64;
 
         // Who is the 'Journal Grand Master'? A
         // new ranking based on the Elo rating
         // system
 
         float ea = 1f / (1f + (Mathf.Pow(10f, (rb - ra) / lammda)));
-
-        Debug.Log("ea=" + ea);
 
         ra = Mathf.FloorToInt(ra + k * (sa - ea));
 

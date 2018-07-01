@@ -113,7 +113,7 @@ public class LoadSceneScript : MonoBehaviour {
         if(!loading)
         {
             TestRunController.AddNewGhostLap(lap);
-            text.text = "current mmr = " + lap.mmr.ToString();
+            text.text = "lap mmr = " + lap.mmr.ToString();
             button.gameObject.SetActive(true);
             loading = true;
         }
@@ -140,6 +140,6 @@ public class LoadSceneScript : MonoBehaviour {
 
     public void StartRun()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(ScenarioNr.RACETRACK3.ToString());
     }
 }

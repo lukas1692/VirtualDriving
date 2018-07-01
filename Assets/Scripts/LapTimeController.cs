@@ -207,7 +207,6 @@ public class LapTimeController : MonoBehaviour
 
         LapTimeDifferenceTextField.text = ParseTimeString(Mathf.Abs(checkpoint_time_difference));
 
-        Debug.Log("Ghost: " + checkpoint_time_difference);
         if (checkpoint_time_difference < 0)
             LapTimeDifferenceTextField.GetComponent<Transform>().parent.transform.gameObject.GetComponent<Image>().color = new Color(1, 0, 0);  //red
         else

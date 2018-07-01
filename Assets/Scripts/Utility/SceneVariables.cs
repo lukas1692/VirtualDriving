@@ -6,9 +6,9 @@ public enum ScenarioNr
 {
     START,
     LOADTRACK,
-    TRACK1,
-    TRACK2,
+    RACETRACK3,
     WHEELOFEMOTIONS,
+    TRACK2,
     QUESTIONARY,
 }
 

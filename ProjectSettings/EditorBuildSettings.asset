@@ -29,3 +29,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Racetrack3.unity
     guid: 947390e3ceda9eb4a941e98c3ddb1e1e
+  - enabled: 1
+    path: Assets/Scenes/WheelOfEmotions.unity
+    guid: 486e41f8ba1fef84a8d429dfe36b5359
