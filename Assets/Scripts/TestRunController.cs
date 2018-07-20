@@ -19,6 +19,8 @@ public class TestRunController
     static RaceType race_type = RaceType.GHOST;
     static public int mmr = 1000;
 
+    static public string id = "Invalid Id";
+
     static public SceneIndicies scene_indecies = null;
 
     public static int GetCurrentRound()
@@ -47,9 +49,11 @@ public class TestRunController
     {
         current_drive = new Lap(scenario, mmr);
 
-        GhostCarScript.StartGhost(current_ghost);
-
-        LapTimeController.SetGhost(current_ghost);
+        if(current_ghost != null)
+        {
+            GhostCarScript.StartGhost(current_ghost);
+            LapTimeController.SetGhost(current_ghost);
+        }
     }
 
     public static void PassFinishLine(Dictionary<int, CheckPointActivation> checkpoints)
@@ -57,19 +61,33 @@ public class TestRunController
         current_drive.AddCheckpoints(checkpoints);
         current_drive.laptime = LapTimeController.GetCurrentTime();
         run.lap.Add(current_drive);
+        current_drive.round = GetCurrentRound();
 
-        if (current_drive.laptime < current_ghost.laptime)
-            mmr = CalculateCurrentMMR(current_ghost.mmr, current_drive.mmr, Game_Score.WON);
+        if(current_ghost != null)
+        {
+            current_drive.opponent_id = current_ghost.myid;
+            current_drive.opponent_round = current_ghost.round;
+
+            if (current_drive.laptime < current_ghost.laptime)
+                mmr = CalculateCurrentMMR(current_ghost.mmr, current_drive.mmr, Game_Score.WON);
+            else
+                mmr = CalculateCurrentMMR(current_ghost.mmr, current_drive.mmr, Game_Score.LOSS);
+        }
         else
-            mmr = CalculateCurrentMMR(current_ghost.mmr, current_drive.mmr, Game_Score.LOSS);
+        {
+            current_drive.opponent_id = "No Opponent";
+            current_drive.opponent_round = -1;
+        }
+
+
+
 
         file_controller.SaveFile(current_drive);
 
         GameObject datamanager = GameObject.FindGameObjectWithTag("DataManagment");
         datamanager.SendMessage("UploadRound", current_drive);
 
-        
-
+        AudioListener.pause = true;
         Time.timeScale = 0f;
     }
 
@@ -77,11 +95,15 @@ public class TestRunController
     {
         // called when upload is finished
         SceneManager.LoadScene(ScenarioNr.WHEELOFEMOTIONS.ToString());
+        AudioListener.pause = false;
         Time.timeScale = 1f;
+
     }
 
     public static int GetClosedGhost()
     {
+        if (scene_indecies == null)
+            return -1;
         int file_index = 0;
 
         int min_mmr = int.MaxValue;

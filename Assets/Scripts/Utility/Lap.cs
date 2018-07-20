@@ -10,6 +10,10 @@ public class Lap {
     public float laptime;
     public ScenarioType scene_type;
     public int mmr;
+    public int round;
+    public string myid;
+    public string opponent_id;
+    public int opponent_round;
 
     public Lap(ScenarioType scene, int curent_mmr)
     {

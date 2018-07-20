@@ -77,7 +77,7 @@ public class WheelOfEmotionScript : MonoBehaviour
 
 
         GDocsQuestionaryEntry entry;
-        entry.id = "TEST";
+        entry.id = TestRunController.id;
         entry.round = TestRunController.GetCurrentRound();
         entry.low = low_emotion;
         entry.medium = medium_emotion;

@@ -20,15 +20,16 @@ public class GoogleDocsController : MonoBehaviour {
         Debug.Log("uploaded lap to google docs");
         Debug.Log(lap.PositionToString().Length);
         
-        StartCoroutine(PostRound(Time.time.ToString(), lap.PositionToString(), lap.TimeToString(), lap.SpeedToString()));
+        StartCoroutine(PostRound(TestRunController.id, lap.round.ToString(), lap.PositionToString(), lap.TimeToString(), lap.SpeedToString()));
     }
 
-    IEnumerator PostRound(string id, string data, string time, string speed)
+    IEnumerator PostRound(string id, string round, string data, string time, string speed)
     {
         // form action
         string Base_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd3ZX-85Qe4Qf40P0zyLBGGHSYeSrM5JvtAkw7WJLevuJu88A/formResponse";
         WWWForm form = new WWWForm();
         form.AddField("entry.1614371190", id);
+        form.AddField("entry.306343255", round);
         form.AddField("entry.1370521960", data);
         form.AddField("entry.405827058", time);
         form.AddField("entry.2142598625", speed);

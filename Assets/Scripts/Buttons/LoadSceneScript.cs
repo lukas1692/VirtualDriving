@@ -112,8 +112,16 @@ public class LoadSceneScript : MonoBehaviour {
     {
         if(!loading)
         {
-            TestRunController.AddNewGhostLap(lap);
-            text.text = "lap mmr = " + lap.mmr.ToString();
+            if (lap != null)
+            {
+                TestRunController.AddNewGhostLap(lap);
+                text.text = "lap mmr = " + lap.mmr.ToString();
+            }
+            else
+            {
+                text.text = "no ghost car active";
+            }
+
             button.gameObject.SetActive(true);
             loading = true;
         }
@@ -122,8 +130,16 @@ public class LoadSceneScript : MonoBehaviour {
     private void Awake()
     {
         int file_index = TestRunController.GetClosedGhost();
+        if(file_index>=0)
+        {
+            StartCoroutine(LoadScene(file_index));
+        }
+        else
+        {
+            // Todo: load last round as ghost if available
+            loading = false;
+        }
         
-        StartCoroutine(LoadScene(file_index));
         //StartCoroutine(LoadAllScenes());
     }
 

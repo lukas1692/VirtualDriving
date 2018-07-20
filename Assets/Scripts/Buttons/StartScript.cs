@@ -56,7 +56,16 @@ public class StartScript : MonoBehaviour {
 
         }
 
-       
+    public string GenerateUniqueID()
+    {
+        string rng = Random.Range(10, 4000000).ToString();
+        string date = System.DateTime.Now.ToString();
+        System.Security.Cryptography.SHA256 shaAlgorithm = new System.Security.Cryptography.SHA256Managed();
+        byte[] shaDigest = shaAlgorithm.ComputeHash(System.Text.ASCIIEncoding.ASCII.GetBytes(rng+date));
+        Debug.Log(rng+date);
+        Debug.Log(System.BitConverter.ToString(shaDigest));
+        return System.BitConverter.ToString(shaDigest);
+    }
     
 
     private void FixedUpdate()
@@ -71,6 +80,7 @@ public class StartScript : MonoBehaviour {
 
     private void Awake()
     {
+        TestRunController.id = GenerateUniqueID();
         StartCoroutine(LoadIndexFile());
     }
 
