@@ -8,15 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Racetrack2.unity
     guid: a2ce2714d63b233458b50b1ae4d06a0c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Start.unity
     guid: d7239fed8d7d0da49acf9eb96d1564c4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LoadTrack.unity
     guid: 7e5aa444d2007234d95aa5545bd6836e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Racetrack3.unity
     guid: 947390e3ceda9eb4a941e98c3ddb1e1e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/WheelOfEmotions.unity
     guid: 486e41f8ba1fef84a8d429dfe36b5359
