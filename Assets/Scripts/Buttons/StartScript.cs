@@ -97,6 +97,6 @@ public class StartScript : MonoBehaviour {
 
     public void StartRun()
     {
-        SceneManager.LoadScene(ScenarioNr.LOADTRACK.ToString());
+        TestRunController.TriggerNextScene();
     }
 }

@@ -16,8 +16,11 @@ public class ViewSceneScript : MonoBehaviour {
     Text text_filed;
     // Use this for initialization
 
-    float min_laptime = float.MaxValue;
-    float max_laptime = float.MinValue;
+    float min_laptime_track1 = float.MaxValue;
+    float max_laptime_track1 = float.MinValue;
+
+    float min_laptime_track2 = float.MaxValue;
+    float max_laptime_track2 = float.MinValue;
 
     void Start () {
         laps = file.LoadAllFiles();
@@ -37,12 +40,24 @@ public class ViewSceneScript : MonoBehaviour {
         string text = "";
         foreach (var lap in laps)
         {
-            text += lap.laptime + ", " + lap.mmr + "\n";
+            text += lap.laptime + ", " + lap.mmr + ", " + lap.scene_type.ToString() + "\n";
 
-            if (lap.laptime < min_laptime)
-                min_laptime = lap.laptime;
-            if (lap.laptime > max_laptime)
-                max_laptime = lap.laptime;
+            if(lap.scene_type == ScenarioType.TRACK1)
+            {
+                if (lap.laptime < min_laptime_track1)
+                    min_laptime_track1 = lap.laptime;
+                if (lap.laptime > max_laptime_track1)
+                    max_laptime_track1 = lap.laptime;
+            }
+            if (lap.scene_type == ScenarioType.TRACK2)
+            {
+                if (lap.laptime < min_laptime_track2)
+                    min_laptime_track2 = lap.laptime;
+                if (lap.laptime > max_laptime_track2)
+                    max_laptime_track2 = lap.laptime;
+            }
+
+
         }
         text_filed.text = text;
     }
@@ -61,7 +76,19 @@ public class ViewSceneScript : MonoBehaviour {
         int i = 0;
         foreach (var lap in laps)
         {
-            float t = 1f - ((lap.laptime-min_laptime) / (max_laptime-min_laptime));
+            float t = 0;
+            switch(lap.scene_type)
+            {
+                case ScenarioType.TRACK1:
+                        t = 1f - ((lap.laptime - min_laptime_track1) / (max_laptime_track1 - min_laptime_track1));
+                    break;
+                case ScenarioType.TRACK2:
+                    t = 1f - ((lap.laptime - min_laptime_track2) / (max_laptime_track2 - min_laptime_track2));
+                    break;
+                default:
+                    break;
+            }
+
             lap.mmr = Mathf.RoundToInt(t * MAX_MMR) + MIN_MMR;
 
             file.SaveFile(lap);

@@ -123,6 +123,6 @@ public class WheelOfEmotionScript : MonoBehaviour
 
     public void EmotionsTriggerNextScene()
     {
-        SceneManager.LoadScene(ScenarioNr.LOADTRACK.ToString());
+        TestRunController.TriggerNextScene();
     }
 }

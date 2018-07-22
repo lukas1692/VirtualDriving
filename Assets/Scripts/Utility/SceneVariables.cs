@@ -5,11 +5,14 @@ using UnityEngine;
 public enum ScenarioNr
 {
     START,
+    INITIALQUESTIONNAIRE,
+    INSTRUCTIONS,
+    EVALUATIONTRACK,
     LOADTRACK,
-    RACETRACK3,
+    RACETRACK1,
+    RACETRACK2,
     WHEELOFEMOTIONS,
-    TRACK2,
-    QUESTIONARY,
+    Questionnaire,
 }
 
 public struct CheckPointActivation

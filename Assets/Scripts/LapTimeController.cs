@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
 public class LapTimeController : MonoBehaviour
 {
 
@@ -136,9 +134,7 @@ public class LapTimeController : MonoBehaviour
         nextCheckpoint = 0;
 
         //ghost_checkpoints = new Dictionary<int, CheckPointActivation>(current_checkpoints);
-
         //resetCurrentCheckpoints();
-
         //WheelDrive.startNewGhost();
     }
 
@@ -177,10 +173,6 @@ public class LapTimeController : MonoBehaviour
                 float ghost_point_time = ghost_point.time;
 
                 checkpoint_time_difference = ghost_point_time - point.time;
-
-                //Debug.Log("Ghost Time " + ghost_point_time);
-                //Debug.Log("Car Time " + point.time);
-                //Debug.Log("Difference: " + checkpoint_time_difference);
 
                 enabled_checkpoint = true;
             }

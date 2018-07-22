@@ -21,6 +21,16 @@ public struct GhostEvent
     public float angle;
     public float torque;
     public float laptime;
+
+    public GhostEvent(Vector3 pos, Quaternion rot, float time)
+    {
+        position = pos;
+        rotation = rot;
+        laptime = time;
+        angle = 0.0f;
+        torque = 0.0f;
+        velocity = Vector3.zero;
+    }
 };
 
 public class WheelDrive : MonoBehaviour
@@ -256,10 +266,7 @@ public class WheelDrive : MonoBehaviour
         Vector3 velocity = rigid.velocity;
        
 
-        GhostEvent ghost = new GhostEvent();
-        ghost.position = rigid.position;
-        ghost.rotation = rigid.rotation;
-        ghost.laptime = LapTimeController.GetCurrentTime();
+        GhostEvent ghost = new GhostEvent(rigid.position, rigid.rotation, LapTimeController.GetCurrentTime());
 
         //Debug.Log(ghost.position + ", " + ghost.laptime);
 
@@ -276,7 +283,7 @@ public class WheelDrive : MonoBehaviour
 
         currentGearText.text = string.Format("{0}",currentGear+1);
 
-        setEngineSpeedStrip();
+        SetEngineSpeedStrip();
 
         //setSpeedStrip(rigid.velocity.magnitude * 3.6);
     }
@@ -294,7 +301,7 @@ public class WheelDrive : MonoBehaviour
     //    replayCarEventStream = new List<GhostEvent>();
     //}
 
-    public void setSpeedStrip(double speed)
+    public void SetSpeedStrip(double speed)
     {
         if (speed < 1)
             return;
@@ -311,9 +318,8 @@ public class WheelDrive : MonoBehaviour
             
     }
 
-    public void setEngineSpeedStrip()
+    public void SetEngineSpeedStrip()
     {
-
         int nr = Convert.ToUInt16(Mathf.Lerp(0, speedStrip.Count, (float)(engineRPM / gearUpRPM)));
 
         for (int i = 0; i < speedStrip.Count; i++)

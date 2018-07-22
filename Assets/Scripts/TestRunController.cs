@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class TestRunController
 {
+    static private int NR_OF_EVALUATIONRUNS = 2;
+
     static private TestRun run = new TestRun();
     static public List<Lap> ghostlaps = new List<Lap>();
 
@@ -15,13 +17,15 @@ public class TestRunController
 
     static private FileController  file_controller = new FileController();
 
-    static ScenarioType scenario = ScenarioType.TRAINING;
+    static ScenarioType scenario_type = ScenarioType.TRAINING;
     static RaceType race_type = RaceType.GHOST;
     static public int mmr = 1000;
 
     static public string id = "Invalid Id";
 
     static public SceneIndicies scene_indecies = null;
+
+    static public ScenarioNr visible_scene = ScenarioNr.START;
 
     public static int GetCurrentRound()
     {
@@ -47,7 +51,7 @@ public class TestRunController
 
     public static void StartFinishLine()
     {
-        current_drive = new Lap(scenario, mmr);
+        current_drive = new Lap(scenario_type, mmr);
 
         if(current_ghost != null)
         {
@@ -91,24 +95,28 @@ public class TestRunController
         Time.timeScale = 0f;
     }
 
-    public static void TriggerNextScene()
-    {
-        // called when upload is finished
-        SceneManager.LoadScene(ScenarioNr.WHEELOFEMOTIONS.ToString());
-        AudioListener.pause = false;
-        Time.timeScale = 1f;
+    //public static void TriggerNextScene()
+    //{
+    //    // called when upload is finished
+    //    SceneManager.LoadScene(ScenarioNr.WHEELOFEMOTIONS.ToString());
+    //    AudioListener.pause = false;
+    //    Time.timeScale = 1f;
 
-    }
+    //}
 
     public static int GetClosedGhost()
     {
+        if (scenario_type == ScenarioType.TRAINING)
+            return -1;
         if (scene_indecies == null)
             return -1;
-        int file_index = 0;
+        int file_index = -1;
 
         int min_mmr = int.MaxValue;
         foreach(var s in scene_indecies.indicies)
         {
+            if (scenario_type != s.scene_type)
+                continue;
             int mmr_dif = Mathf.Abs(s.mmr - mmr);
             if (min_mmr > mmr_dif)
             {
@@ -145,5 +153,69 @@ public class TestRunController
         Debug.Log("new mmr=" + ra);
 
         return ra;
+    }
+
+    public static void TriggerNextScene()
+    {
+        switch (visible_scene)
+        {
+            case ScenarioNr.START:
+                visible_scene = ScenarioNr.INITIALQUESTIONNAIRE;
+                SceneManager.LoadScene(ScenarioNr.INITIALQUESTIONNAIRE.ToString());
+                break;
+            case ScenarioNr.INITIALQUESTIONNAIRE:
+                visible_scene = ScenarioNr.INSTRUCTIONS;
+                SceneManager.LoadScene(ScenarioNr.INSTRUCTIONS.ToString());
+                break;
+            case ScenarioNr.INSTRUCTIONS:
+                visible_scene = ScenarioNr.LOADTRACK;
+                SceneManager.LoadScene(ScenarioNr.LOADTRACK.ToString());
+                break;
+            case ScenarioNr.EVALUATIONTRACK:
+                visible_scene = ScenarioNr.WHEELOFEMOTIONS;
+                if (run.GetCurrentRound() == NR_OF_EVALUATIONRUNS)
+                {
+                    scenario_type = ScenarioType.TRACK1;
+                }
+                    
+                SceneManager.LoadScene(ScenarioNr.WHEELOFEMOTIONS.ToString());
+                break;
+            case ScenarioNr.LOADTRACK:
+                Debug.Log("Round: " + run.GetCurrentRound());
+                if (run.GetCurrentRound() < NR_OF_EVALUATIONRUNS)
+                {
+                    scenario_type = ScenarioType.TRAINING;
+                    visible_scene = ScenarioNr.EVALUATIONTRACK;
+                    SceneManager.LoadScene(ScenarioNr.EVALUATIONTRACK.ToString());
+                }
+                else
+                {
+                    scenario_type = ScenarioType.TRACK1;
+                    visible_scene = ScenarioNr.RACETRACK1;
+                    SceneManager.LoadScene(ScenarioNr.RACETRACK1.ToString());
+                }
+                break;
+            case ScenarioNr.WHEELOFEMOTIONS:
+                visible_scene = ScenarioNr.Questionnaire;
+                SceneManager.LoadScene(ScenarioNr.Questionnaire.ToString());
+                AudioListener.pause = false;
+                Time.timeScale = 1f;
+                break;
+            case ScenarioNr.Questionnaire:
+                visible_scene = ScenarioNr.LOADTRACK;
+                SceneManager.LoadScene(ScenarioNr.LOADTRACK.ToString());
+                break;
+            case ScenarioNr.RACETRACK1:
+                visible_scene = ScenarioNr.WHEELOFEMOTIONS;
+                SceneManager.LoadScene(ScenarioNr.WHEELOFEMOTIONS.ToString());
+                break;
+            case ScenarioNr.RACETRACK2:
+                visible_scene = ScenarioNr.WHEELOFEMOTIONS;
+                SceneManager.LoadScene(ScenarioNr.WHEELOFEMOTIONS.ToString());
+                break;
+            default:
+                Debug.LogError("Invalid Scene");
+                break;
+        }
     }
 }

@@ -23,6 +23,9 @@ public class LoadSceneScript : MonoBehaviour {
     [SerializeField]
     GameObject button;
 
+    [SerializeField]
+    GameObject loading_circle;
+
     IEnumerator LoadAllScenes()
     {
         int nr = 0;
@@ -124,6 +127,7 @@ public class LoadSceneScript : MonoBehaviour {
 
             button.gameObject.SetActive(true);
             loading = true;
+            loading_circle.SetActive(false);
         }
     }
 
@@ -156,6 +160,7 @@ public class LoadSceneScript : MonoBehaviour {
 
     public void StartRun()
     {
-        SceneManager.LoadScene(ScenarioNr.RACETRACK3.ToString());
+        TestRunController.TriggerNextScene();
+        //SceneManager.LoadScene(ScenarioNr.RACETRACK2.ToString());
     }
 }

@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-struct Question
+struct InitQuestion
 {
-    public Question(uint number_, string text_)
+    public InitQuestion(uint number_, string text_, string left, string right)
     {
         number = number_;
         text = text_;
         rating = -1;
+        left_text = left;
+        right_text = right;
     }
 
     public uint number;
     public string text;
     public int rating;
+
+    public string left_text;
+    public string right_text;
 
     public override string ToString()
     {
@@ -22,8 +27,7 @@ struct Question
     }
 };
 
-public class QuestionManager : MonoBehaviour
-{
+public class InitialQuestionManager : MonoBehaviour {
 
     private int activeQuestion = 0;
 
@@ -31,56 +35,46 @@ public class QuestionManager : MonoBehaviour
 
     private Text questionText;
 
-    private List<Question> allquestions = new List<Question>();
+    private List<InitQuestion> allquestions = new List<InitQuestion>();
 
-    private Question[] questions;
+    private InitQuestion[] questions;
 
     private GameObject confirmButton;
 
+    public Text left_text;
+    public Text right_text;
 
     // Use this for initialization
-    void Start()
-    {
-
+    void Start () {
         radioButtons = GameObject.FindGameObjectsWithTag("RadioButton");
 
         questionText = GameObject.FindGameObjectWithTag("Question").GetComponent<Text>();
 
         confirmButton = GameObject.FindGameObjectWithTag("ConfirmButton");
 
-        allquestions.Add(new Question(1, "The level was fun"));
-        allquestions.Add(new Question(2, "I can do better"));
+        allquestions.Add(new InitQuestion(1, "Rate your car driving skill", "bad", "excellent"));
+        allquestions.Add(new InitQuestion(2, "Experience with video games", "none", "a lot"));
 
-        Shuffle(allquestions);
+        questions = (InitQuestion[])allquestions.ToArray();
 
-        // Todo shuffle
-        questions = (Question[])allquestions.ToArray();
-
-        questionText.text = questions[activeQuestion].text;
+        SetQuestion();
 
         UncheckAll();
 
         DisableConfirmButton();
     }
 
-    void WriteQuestionFile(string name)
+    void SetQuestion()
     {
+        questionText.text = questions[activeQuestion].text;
+        left_text.text = questions[activeQuestion].left_text;
+        right_text.text = questions[activeQuestion].right_text;
     }
-
-    void Shuffle(List<Question> list)
-    {
-        int n = list.Count;
-
-        System.Random rng = new System.Random();
-        while (n > 1)
-        {
-            n--;
-            int k = Random.Range(0, n);
-            Question value = list[k];
-            list[k] = list[n];
-            list[n] = value;
-        }
-    }
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
 
     void DisableConfirmButton()
     {
@@ -90,12 +84,6 @@ public class QuestionManager : MonoBehaviour
     void EnableConfirmButton()
     {
         confirmButton.SetActive(true);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     void UncheckAll()
@@ -113,7 +101,7 @@ public class QuestionManager : MonoBehaviour
         DisableConfirmButton();
         if (activeQuestion < questions.Length)
         {
-            questionText.text = questions[activeQuestion].text;
+            SetQuestion();
         }
         else
         {

@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FinishLineScript : MonoBehaviour {
-
-
+public class Instructions : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -16,10 +14,8 @@ public class FinishLineScript : MonoBehaviour {
 		
 	}
 
-    private void OnTriggerExit(Collider other)
+    public void Accept()
     {
-        LapTimeController.ResetLapTime();
+        TestRunController.TriggerNextScene();
     }
-
-
 }
