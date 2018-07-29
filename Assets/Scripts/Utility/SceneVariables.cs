@@ -13,6 +13,7 @@ public enum ScenarioNr
     RACETRACK2,
     WHEELOFEMOTIONS,
     Questionnaire,
+    END,
 }
 
 public struct CheckPointActivation

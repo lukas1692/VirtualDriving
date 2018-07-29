@@ -118,11 +118,11 @@ public class LoadSceneScript : MonoBehaviour {
             if (lap != null)
             {
                 TestRunController.AddNewGhostLap(lap);
-                text.text = "lap mmr = " + lap.mmr.ToString();
+                text.text = "opponent mmr = " + lap.mmr.ToString();
             }
             else
             {
-                text.text = "no ghost car active";
+                text.text = "(no ghost car active)";
             }
 
             button.gameObject.SetActive(true);

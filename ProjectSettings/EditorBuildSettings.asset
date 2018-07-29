@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Start.unity
-    guid: d7239fed8d7d0da49acf9eb96d1564c4
+    guid: ad7620f9e4d83974ea7cae7b00b7b344
   - enabled: 1
     path: Assets/Scenes/InitialQuestionnaire.unity
     guid: 7a1f744c296688c419dc66dcc8d4646c
@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WheelOfEmotions.unity
     guid: 486e41f8ba1fef84a8d429dfe36b5359
+  - enabled: 1
+    path: Assets/Scenes/End.unity
+    guid: d7239fed8d7d0da49acf9eb96d1564c4
   - enabled: 1
     path: Assets/Scenes/Questionnaire.unity
     guid: 0cb32461624da3449abba409c18d03f6

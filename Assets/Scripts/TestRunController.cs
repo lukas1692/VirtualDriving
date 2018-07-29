@@ -66,8 +66,9 @@ public class TestRunController
         current_drive.laptime = LapTimeController.GetCurrentTime();
         run.lap.Add(current_drive);
         current_drive.round = GetCurrentRound();
+        current_drive.myid = id;
 
-        if(current_ghost != null)
+        if (current_ghost != null)
         {
             current_drive.opponent_id = current_ghost.myid;
             current_drive.opponent_round = current_ghost.round;
@@ -140,7 +141,7 @@ public class TestRunController
         int ra = current;
         int rb = ghost;
         //int k = 32;
-        int k = 64;
+        int k = 128;
 
         // Who is the 'Journal Grand Master'? A
         // new ranking based on the Elo rating
@@ -182,17 +183,23 @@ public class TestRunController
                 break;
             case ScenarioNr.LOADTRACK:
                 Debug.Log("Round: " + run.GetCurrentRound());
+
                 if (run.GetCurrentRound() < NR_OF_EVALUATIONRUNS)
                 {
                     scenario_type = ScenarioType.TRAINING;
                     visible_scene = ScenarioNr.EVALUATIONTRACK;
                     SceneManager.LoadScene(ScenarioNr.EVALUATIONTRACK.ToString());
                 }
-                else
+                else if (run.GetCurrentRound() < 8)
+                //if (run.GetCurrentRound() < 8)
                 {
                     scenario_type = ScenarioType.TRACK1;
                     visible_scene = ScenarioNr.RACETRACK1;
                     SceneManager.LoadScene(ScenarioNr.RACETRACK1.ToString());
+                }
+                else if (run.GetCurrentRound() < 11)
+                {
+                    SceneManager.LoadScene(ScenarioNr.END.ToString());
                 }
                 break;
             case ScenarioNr.WHEELOFEMOTIONS:

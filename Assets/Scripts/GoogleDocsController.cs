@@ -18,7 +18,6 @@ public class GoogleDocsController : MonoBehaviour {
     public void UploadRound(Lap lap)
     {
         Debug.Log("uploaded lap to google docs");
-        Debug.Log(lap.PositionToString().Length);
         
         StartCoroutine(PostRound(TestRunController.id, lap.round.ToString(), lap.PositionToString(), lap.TimeToString(), lap.SpeedToString(), lap.opponent_id, lap.opponent_round.ToString(), lap.mmr.ToString(), lap.scene_type.ToString()));
     }
