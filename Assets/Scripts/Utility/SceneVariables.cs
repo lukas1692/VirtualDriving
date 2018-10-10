@@ -6,6 +6,7 @@ public enum ScenarioNr
 {
     START,
     INITIALQUESTIONNAIRE,
+    BIGFIVE,
     INSTRUCTIONS,
     EVALUATIONTRACK,
     LOADTRACK,

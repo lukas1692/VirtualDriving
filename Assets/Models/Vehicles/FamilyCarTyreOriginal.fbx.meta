@@ -1,54 +1,26 @@
 fileFormatVersion: 2
-guid: 045e59032d0e0a048b298c87ae327913
-timeCreated: 1528543536
+guid: 67fbc729347a37c4c97c0123f1b7b609
+timeCreated: 1539023321
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Camera
-    100002: FamilyCar
-    100004: //RootNode
-    100006: Lamp
-    400000: Camera
-    400002: FamilyCar
-    400004: //RootNode
-    400006: Lamp
-    2000000: Camera
-    2300000: FamilyCar
-    3300000: FamilyCar
-    4300000: FamilyCar
-    10800000: Lamp
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: FamilyCarTyre002
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: BrakeLights
-    second: {fileID: 2100000, guid: 02d69e5b19e334d41a2e754b158c42b4, type: 2}
+      name: Hub
+    second: {fileID: 2100000, guid: e896a8c2d9e68974a9a931fcd6134346, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: CarPaint
-    second: {fileID: 2100000, guid: 3db288bf1355a9c44aa3c3b4ff50e5f1, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Glass
-    second: {fileID: 2100000, guid: d8eae30f277e1c844b715fcdc92e1b35, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Light
-    second: {fileID: 2100000, guid: ab30dc19130f636469410785c0391e1a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Plastic
-    second: {fileID: 2100000, guid: abc551aa79a2bb8448780f0799122858, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: VehicleUnderside
-    second: {fileID: 2100000, guid: 07b7a5a62edc1ae439f3874e7d242069, type: 2}
+      name: Tyre
+    second: {fileID: 2100000, guid: 3cfaaa7745b66174e90b59b423e4c5fd, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

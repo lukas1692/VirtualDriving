@@ -161,6 +161,10 @@ public class TestRunController
         switch (visible_scene)
         {
             case ScenarioNr.START:
+                visible_scene = ScenarioNr.BIGFIVE;
+                SceneManager.LoadScene(ScenarioNr.BIGFIVE.ToString());
+                break;
+            case ScenarioNr.BIGFIVE:
                 visible_scene = ScenarioNr.INITIALQUESTIONNAIRE;
                 SceneManager.LoadScene(ScenarioNr.INITIALQUESTIONNAIRE.ToString());
                 break;
