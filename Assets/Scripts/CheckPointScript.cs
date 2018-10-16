@@ -20,6 +20,9 @@ public class CheckPointScript : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         if(other.transform.parent != null && other.transform.parent.CompareTag("Player"))
-            LapTimeController.ActivateCheckPoint(CheckPointNumber);
+        {
+            LapTimeController.ActivateCheckPoint(CheckPointNumber, transform);
+        }
+            
     }
 }

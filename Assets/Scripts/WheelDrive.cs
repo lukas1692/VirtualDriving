@@ -89,8 +89,16 @@ public class WheelDrive : MonoBehaviour
 
     private WheelCollider tractionWheel;
 
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
+
     // Find all the WheelColliders down in the hierarchy.
 
+    private void Awake()
+    {
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
+    }
 
     void Start()
 	{
@@ -128,10 +136,16 @@ public class WheelDrive : MonoBehaviour
 	// This helps us to figure our which wheels are front ones and which are rear.
 	void Update()
 	{
-		m_Wheels[0].ConfigureVehicleSubsteps(criticalSpeed, stepsBelow, stepsAbove);
+        // Key Handle
+        float input_horizontal = Input.GetAxis("Horizontal");
+        float input_vertical = Input.GetAxis("Vertical");
+        bool input_reset = Input.GetKey(KeyCode.R);
 
 
-        float angle = maxAngle * Input.GetAxis("Horizontal");
+        m_Wheels[0].ConfigureVehicleSubsteps(criticalSpeed, stepsBelow, stepsAbove);
+
+
+        float angle = maxAngle * input_horizontal;
 		//float torque = maxTorque * Input.GetAxis("Vertical");
 
 		float handBrake = Input.GetKey(KeyCode.X) ? brakeTorque : 0;
@@ -139,9 +153,11 @@ public class WheelDrive : MonoBehaviour
         rpm = tractionWheel.rpm;
 
         AutoGears();
-        Accelerate();
+        ResetCarToCheckPoint(input_reset);
+        Accelerate(input_vertical);
 
         currentSpeed = GetComponent<Rigidbody>().velocity.magnitude * 3.6f;
+        
         engineRPM = Mathf.Round((rpm * gearRatio[currentGear]));
         torque = bhp * gearRatio[currentGear];
 
@@ -181,11 +197,13 @@ public class WheelDrive : MonoBehaviour
 				shapeTransform.rotation = q;
 			}
 		}
-	}
 
-    void Accelerate()
+
+    }
+
+    void Accelerate(float input_vertical)
     {
-        float motorTorque = torque * Input.GetAxis("Vertical");
+        float motorTorque = torque * input_vertical;
 
         foreach (WheelCollider wheel in m_Wheels)
         {
@@ -213,7 +231,7 @@ public class WheelDrive : MonoBehaviour
                 
             }
 
-            if (engineRPM > 0 && Input.GetAxis("Vertical") < 0 && engineRPM <= gearUpRPM)
+            if (engineRPM > 0 && input_vertical < 0 && engineRPM <= gearUpRPM)
             {
                 if(wheel.transform.localPosition.z >= 0)
                     wheel.brakeTorque = brakeTorque;
@@ -228,6 +246,10 @@ public class WheelDrive : MonoBehaviour
 
     void AutoGears()
     {
+        // Reset RPM
+        if (engineRPM < 20)
+            currentGear = 0;
+
         int appropriateGear = currentGear;
 
         if (engineRPM >= gearUpRPM)
@@ -256,6 +278,32 @@ public class WheelDrive : MonoBehaviour
                 }
             }
             currentGear = appropriateGear;
+        }
+    }
+
+    void ResetCarToCheckPoint(bool input_reset)
+    {
+        if (input_reset)
+        {
+            Debug.Log("Reset Lap");
+            currentSpeed = 0.0f;
+            engineRPM = 0.0f;
+            torque = 0.0f;
+            rpm = 0.0f;
+            currentGear = 0;
+            tractionWheel.brakeTorque = Mathf.Infinity;
+
+            transform.rotation = initialRotation;
+            transform.position = initialPosition;
+
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+            foreach (WheelCollider wheel in m_Wheels)
+            {
+                wheel.brakeTorque = Mathf.Infinity;
+                
+            }
         }
     }
 
@@ -330,5 +378,11 @@ public class WheelDrive : MonoBehaviour
                 speedStrip[i].GetComponent<Image>().color = new Color(255, 255, 255);
         }
 
+    }
+
+    public void SetCheckpoint(Transform transform)
+    {
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
     }
 }

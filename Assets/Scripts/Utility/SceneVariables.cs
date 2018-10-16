@@ -22,6 +22,33 @@ public struct CheckPointActivation
     public int nr;
     public bool activated;
     public float time;
+    public Vector3 position;
+    public Quaternion rotation;
+
+    public void SetTransformation(Transform trans)
+    {
+        position = trans.position;
+        rotation = trans.rotation;
+    }
+
+
+    public CheckPointActivation(int nr_)
+    {
+        nr = nr_;
+        activated = false;
+        time = 0.0f;
+        position = Vector3.zero;
+        rotation = Quaternion.identity;
+    }
+
+    public CheckPointActivation(int nr_, bool activated_, float time_)
+    {
+        nr = nr_;
+        activated = activated_;
+        time = time_;
+        position = Vector3.zero;
+        rotation = Quaternion.identity;
+    }
 };
 
 public enum RaceType

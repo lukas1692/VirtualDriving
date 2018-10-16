@@ -58,10 +58,7 @@ public class LapTimeController : MonoBehaviour
 
         for (int i = 0; i < nrcheckpoints; i++)
         {
-            CheckPointActivation newPoint;
-            newPoint.nr = i;
-            newPoint.activated = false;
-            newPoint.time = 0.0f;
+            CheckPointActivation newPoint = new CheckPointActivation(i);
             ghost_checkpoints[i] = newPoint;
         }
     }
@@ -71,10 +68,7 @@ public class LapTimeController : MonoBehaviour
         ghost_checkpoints = new Dictionary<int, CheckPointActivation>();
         foreach (CheckPoint cp in ghostlap.checkpoint)
         {
-            CheckPointActivation newPoint;
-            newPoint.nr = cp.nr;
-            newPoint.activated = true;
-            newPoint.time = cp.time;
+            CheckPointActivation newPoint = new CheckPointActivation(cp.nr, true, cp.time);
             ghost_checkpoints[cp.nr] = newPoint;
         }
     }
@@ -158,14 +152,17 @@ public class LapTimeController : MonoBehaviour
         return currentTime;
     }
 
-    static public void ActivateCheckPoint(int nr)
+    static public void ActivateCheckPoint(int nr, Transform position)
     {
         if (nextCheckpoint == nr)
         {
             CheckPointActivation point = current_checkpoints[nr];
             point.activated = true;
             point.time = currentTime;
+            point.SetTransformation(position);
             current_checkpoints[nr] = point;
+
+            GameObject.FindGameObjectWithTag("Player").GetComponent<WheelDrive>().SetCheckpoint(position);
 
             CheckPointActivation ghost_point = ghost_checkpoints[nr];
             if (ghost_point.activated)
@@ -185,10 +182,7 @@ public class LapTimeController : MonoBehaviour
     {
         for (int i = 0; i < nrcheckpoints; i++)
         {
-            CheckPointActivation newPoint;
-            newPoint.nr = i;
-            newPoint.activated = false;
-            newPoint.time = 0.0f;
+            CheckPointActivation newPoint = new CheckPointActivation(i);
             current_checkpoints[i] = newPoint;
         }
     }

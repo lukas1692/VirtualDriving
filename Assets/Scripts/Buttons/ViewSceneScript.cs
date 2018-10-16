@@ -14,6 +14,9 @@ public class ViewSceneScript : MonoBehaviour {
 
     [SerializeField]
     Text text_filed;
+
+    [SerializeField]
+    Text text_training;
     // Use this for initialization
 
     float min_laptime_track1 = float.MaxValue;
@@ -21,6 +24,9 @@ public class ViewSceneScript : MonoBehaviour {
 
     float min_laptime_track2 = float.MaxValue;
     float max_laptime_track2 = float.MinValue;
+
+    float min_laptime_training = float.MaxValue;
+    float max_laptime_training = float.MinValue;
 
     void Start () {
         laps = file.LoadAllFiles();
@@ -38,28 +44,40 @@ public class ViewSceneScript : MonoBehaviour {
     public void ViewList()
     {
         string text = "";
+        string text_train = "";
+
         foreach (var lap in laps)
         {
-            text += lap.laptime + ", " + lap.mmr + ", " + lap.scene_type.ToString() + "\n";
-
-            if(lap.scene_type == ScenarioType.TRACK1)
+            if (lap.scene_type == ScenarioType.TRAINING)
             {
+                text_train += lap.laptime + ", " + lap.mmr + ", " + lap.scene_type.ToString() + "\n";
+                if (lap.laptime < min_laptime_training)
+                    min_laptime_training = lap.laptime;
+                if (lap.laptime > max_laptime_training)
+                    max_laptime_training = lap.laptime;
+                text_training.text = text_train;
+            }
+            if (lap.scene_type == ScenarioType.TRACK1)
+            {
+                text += lap.laptime + ", " + lap.mmr + ", " + lap.scene_type.ToString() + "\n";
                 if (lap.laptime < min_laptime_track1)
                     min_laptime_track1 = lap.laptime;
                 if (lap.laptime > max_laptime_track1)
                     max_laptime_track1 = lap.laptime;
+                text_filed.text = text;
             }
             if (lap.scene_type == ScenarioType.TRACK2)
             {
+                text += lap.laptime + ", " + lap.mmr + ", " + lap.scene_type.ToString() + "\n";
                 if (lap.laptime < min_laptime_track2)
                     min_laptime_track2 = lap.laptime;
                 if (lap.laptime > max_laptime_track2)
                     max_laptime_track2 = lap.laptime;
+                text_filed.text = text;
             }
 
-
         }
-        text_filed.text = text;
+        
     }
 
 	// Update is called once per frame
@@ -79,6 +97,9 @@ public class ViewSceneScript : MonoBehaviour {
             float t = 0;
             switch(lap.scene_type)
             {
+                case ScenarioType.TRAINING:
+                    t = 1f - ((lap.laptime - min_laptime_training) / (max_laptime_training - min_laptime_training));
+                    break;
                 case ScenarioType.TRACK1:
                         t = 1f - ((lap.laptime - min_laptime_track1) / (max_laptime_track1 - min_laptime_track1));
                     break;
