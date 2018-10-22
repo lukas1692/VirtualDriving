@@ -73,7 +73,8 @@ public class StartScript : MonoBehaviour {
         if(!loading)
         {
             button.gameObject.SetActive(true);
-            TestRunController.scene_indecies = index_file;
+            // TODO: RANDOM MODE
+            TestRunController.InitTestRunController(index_file, RaceType.GHOST);
             loading = true;
         }
     }

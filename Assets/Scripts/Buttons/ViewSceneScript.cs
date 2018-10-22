@@ -12,6 +12,9 @@ public class ViewSceneScript : MonoBehaviour {
     const int MIN_MMR = 500;
     const int MAX_MMR = 1500;
 
+    const int MIN_TRAINING_MMR = 700;
+    const int MAX_TRAINING_MMR = 1100;
+
     [SerializeField]
     Text text_filed;
 
@@ -98,19 +101,22 @@ public class ViewSceneScript : MonoBehaviour {
             switch(lap.scene_type)
             {
                 case ScenarioType.TRAINING:
-                    t = 1f - ((lap.laptime - min_laptime_training) / (max_laptime_training - min_laptime_training));
+                        t = 1f - ((lap.laptime - min_laptime_training) / (max_laptime_training - min_laptime_training));
+                        lap.mmr = Mathf.RoundToInt(t * MAX_TRAINING_MMR) + MIN_TRAINING_MMR;
                     break;
                 case ScenarioType.TRACK1:
                         t = 1f - ((lap.laptime - min_laptime_track1) / (max_laptime_track1 - min_laptime_track1));
+                        lap.mmr = Mathf.RoundToInt(t * MAX_MMR) + MIN_MMR;
                     break;
                 case ScenarioType.TRACK2:
-                    t = 1f - ((lap.laptime - min_laptime_track2) / (max_laptime_track2 - min_laptime_track2));
+                        t = 1f - ((lap.laptime - min_laptime_track2) / (max_laptime_track2 - min_laptime_track2));
+                        lap.mmr = Mathf.RoundToInt(t * MAX_MMR) + MIN_MMR;
                     break;
                 default:
                     break;
             }
 
-            lap.mmr = Mathf.RoundToInt(t * MAX_MMR) + MIN_MMR;
+            
 
             file.SaveFile(lap);
 

@@ -13,13 +13,13 @@ public class TestRunController
     static public List<Lap> ghostlaps = new List<Lap>();
 
     static public Lap current_ghost;
-    static public Lap current_drive = new Lap(ScenarioType.TRAINING, 1000);
+    static public Lap current_drive = new Lap(ScenarioType.TRAINING, RaceType.GHOST, -1);
 
     static private FileController  file_controller = new FileController();
 
     static ScenarioType scenario_type = ScenarioType.TRAINING;
     static RaceType race_type = RaceType.GHOST;
-    static public int mmr = 1000;
+    static public int mmr = -1;
 
     static public string id = "Invalid Id";
 
@@ -27,14 +27,16 @@ public class TestRunController
 
     static public ScenarioNr visible_scene = ScenarioNr.START;
 
+    public static void InitTestRunController(SceneIndicies indicies, RaceType type)
+    {
+        scene_indecies = indicies;
+        race_type = type;
+        current_drive = new Lap(scenario_type, race_type, mmr);
+    }
+
     public static int GetCurrentRound()
     {
         return run.GetCurrentRound();
-    }
-
-    public static void Init(List<Lap> laps)
-    {
-        ghostlaps = laps;
     }
 
     public static void AddNewGhostLap(Lap lap)
@@ -51,7 +53,7 @@ public class TestRunController
 
     public static void StartFinishLine()
     {
-        current_drive = new Lap(scenario_type, mmr);
+        current_drive = new Lap(scenario_type, race_type, mmr);
 
         if(current_ghost != null)
         {
@@ -107,6 +109,8 @@ public class TestRunController
 
     public static int GetClosedGhost()
     {
+        if (race_type == RaceType.TIME)
+            return -1;
         if (scenario_type == ScenarioType.TRAINING)
             return -1;
         if (scene_indecies == null)
@@ -156,6 +160,18 @@ public class TestRunController
         return ra;
     }
 
+    public static Lap GetLastLap()
+    {
+        if (race_type == RaceType.GHOST)
+            return null;
+
+        int index = run.lap.FindLastIndex(x => x.scene_type == scenario_type);
+        if (index > -1)
+            return run.lap[index];
+        else
+            return null;
+    }
+
     public static void TriggerNextScene()
     {
         switch (visible_scene)
@@ -181,6 +197,7 @@ public class TestRunController
                 if (run.GetCurrentRound() == NR_OF_EVALUATIONRUNS)
                 {
                     scenario_type = ScenarioType.TRACK1;
+                    CalculatedInitialMMR();
                 }
                     
                 SceneManager.LoadScene(ScenarioNr.WHEELOFEMOTIONS.ToString());
@@ -195,8 +212,10 @@ public class TestRunController
                     SceneManager.LoadScene(ScenarioNr.EVALUATIONTRACK.ToString());
                 }
                 else if (run.GetCurrentRound() < 8)
-                //if (run.GetCurrentRound() < 8)
                 {
+                    // Set MMR when Evaluation is finished
+                    CalculatedInitialMMR();
+
                     scenario_type = ScenarioType.TRACK1;
                     visible_scene = ScenarioNr.RACETRACK1;
                     SceneManager.LoadScene(ScenarioNr.RACETRACK1.ToString());
@@ -228,5 +247,51 @@ public class TestRunController
                 Debug.LogError("Invalid Scene");
                 break;
         }
+    }
+
+    private static void CalculatedInitialMMR()
+    {
+        if (mmr >= 0)
+            return;
+
+        var trainings = scene_indecies.indicies.FindAll(x => x.scene_type == ScenarioType.TRAINING);
+
+        if(trainings.Count == 0)
+        {
+            Debug.Log("ERROR TestRunController: Can't find trainings round in index file");
+            mmr = 1000;
+            return;
+        }
+
+        var personal_trainings = run.lap.FindAll(x => x.scene_type == ScenarioType.TRAINING);
+        float personal_best_laptime = float.MaxValue;
+        if (personal_trainings.Count == 0)
+        {
+            Debug.Log("ERROR TestRunController: Can't find personal trainings round when calculating init MMR");
+            return;
+        }
+        foreach(var l in personal_trainings)
+        {
+            if (personal_best_laptime > l.laptime)
+                personal_best_laptime = l.laptime;
+        }
+
+        SceneIndex closesed_trainingsround = trainings[0];
+        float dif = float.MaxValue;
+        foreach(var t in trainings)
+        {
+            float temp_dif = Mathf.Abs(t.laptime - personal_best_laptime);
+            if (temp_dif < dif)
+            {
+                dif = temp_dif; 
+                closesed_trainingsround = t;
+            }
+                
+        }
+
+        mmr = closesed_trainingsround.mmr;
+        Debug.Log("Calculated initial mmr:" + mmr);
+        Debug.Log("Best Round:" + personal_best_laptime);
+        Debug.Log("Closest:" + closesed_trainingsround.laptime);
     }
 }

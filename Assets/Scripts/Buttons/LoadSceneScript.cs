@@ -141,7 +141,9 @@ public class LoadSceneScript : MonoBehaviour {
         else
         {
             // Todo: load last round as ghost if available
+            lap = TestRunController.GetLastLap();
             loading = false;
+
         }
         
         //StartCoroutine(LoadAllScenes());

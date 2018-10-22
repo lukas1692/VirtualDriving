@@ -9,15 +9,17 @@ public class Lap {
     public List<CheckPoint> checkpoint = new List<CheckPoint>();
     public float laptime;
     public ScenarioType scene_type;
+    public RaceType race_type;
     public int mmr;
     public int round;
     public string myid;
     public string opponent_id;
     public int opponent_round;
 
-    public Lap(ScenarioType scene, int curent_mmr)
+    public Lap(ScenarioType scene, RaceType race, int curent_mmr)
     {
         scene_type = scene;
+        race_type = race;
         mmr = curent_mmr;
     }
 
