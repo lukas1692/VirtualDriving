@@ -20,6 +20,7 @@ public class StartScript : MonoBehaviour {
 
     [SerializeField]
     GameObject button;
+    
 
     IEnumerator LoadIndexFile()
     {
@@ -74,7 +75,8 @@ public class StartScript : MonoBehaviour {
         {
             button.gameObject.SetActive(true);
             // TODO: RANDOM MODE
-            TestRunController.InitTestRunController(index_file, RaceType.GHOST);
+            //TestRunController.InitTestRunController(index_file, RaceType.GHOST);
+            TestRunController.InitTestRunController(index_file, RaceType.TIME);
             loading = true;
         }
     }

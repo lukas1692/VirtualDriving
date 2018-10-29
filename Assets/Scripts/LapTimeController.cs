@@ -53,8 +53,8 @@ public class LapTimeController : MonoBehaviour
         ResetCurrentCheckpoints();
 
         // reset ghost checkpoints
-        if (ghost_checkpoints.Count > 0)
-            return;
+        //if (ghost_checkpoints.Count > 0)
+        //    return;
 
         for (int i = 0; i < nrcheckpoints; i++)
         {

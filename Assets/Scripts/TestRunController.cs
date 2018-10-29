@@ -45,6 +45,11 @@ public class TestRunController
         current_ghost = lap;
     }
 
+    public static void ResetGhostLap()
+    {
+        current_ghost = null;
+    }
+
     public static void AddCurrentTimeStep(TimeStep step)
     {
         step.time = LapTimeController.GetCurrentTime();
@@ -167,7 +172,10 @@ public class TestRunController
 
         int index = run.lap.FindLastIndex(x => x.scene_type == scenario_type);
         if (index > -1)
-            return run.lap[index];
+        {
+            Lap lap = run.lap[index];
+            return lap;
+        }
         else
             return null;
     }

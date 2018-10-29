@@ -122,6 +122,7 @@ public class LoadSceneScript : MonoBehaviour {
             }
             else
             {
+                TestRunController.ResetGhostLap();
                 text.text = "(no ghost car active)";
             }
 
