@@ -464,7 +464,7 @@ RectTransform:
   m_GameObject: {fileID: 529543241}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 90}
-  m_LocalScale: {x: 0.29469964, y: 0.29469964, z: 0.29469964}
+  m_LocalScale: {x: 0.24860819, y: 0.24860819, z: 0.24860819}
   m_Children:
   - {fileID: 91335159}
   - {fileID: 821600342}
@@ -502,7 +502,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 821600341}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 114.91142, z: 90}
+  m_LocalPosition: {x: 0, y: 151.233, z: 90}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 529543245}
@@ -617,7 +617,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1188389119}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -115.91142, z: 0}
+  m_LocalPosition: {x: 0, y: -152.233, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 262901903}
@@ -865,8 +865,6 @@ MonoBehaviour:
 
 
     Movement:  WASD / Arrow keys
-
-    Handbrake: X
 
     Reset: R'
 --- !u!222 &2107523438

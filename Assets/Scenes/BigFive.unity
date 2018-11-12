@@ -1675,6 +1675,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1331294274}
   - component: {fileID: 1331294275}
+  - component: {fileID: 1331294276}
   m_Layer: 5
   m_Name: Question Manager
   m_TagString: DataManagment
@@ -1710,6 +1711,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1947a27861b1a2b4bbaef8334d5acfac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1331294276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1331294273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d81ac5bc240bcf42974df3124f8bcbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1349723168
@@ -2165,8 +2177,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1729010626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 481, y: 267, z: 0}
-  m_LocalScale: {x: 1.0020833, y: 1.0020833, z: 1.0020833}
+  m_LocalPosition: {x: 515, y: 299, z: 0}
+  m_LocalScale: {x: 1.0729166, y: 1.0729166, z: 1.0729166}
   m_Children:
   - {fileID: 330375657}
   - {fileID: 1686922173}

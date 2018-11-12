@@ -47,6 +47,49 @@ struct BigFiveQuestion
     }
 };
 
+public struct GDocsBigFiveQuestionManagerEntry
+{
+    public string id;
+
+    public int reserved_rating_1;
+    public int trust_rating_2;
+    public int lazy_rating_3;
+    public int stress_rating_4;
+    public int artistic_rating_5;
+    public int sozial_rating_6;
+    public int fault_rating_7;
+    public int job_rating_8;
+    public int nervous_rating_9;
+    public int imagination_rating_10;
+
+    public double extraversion;
+    public double agreeableness;
+    public double conscientiousness;
+    public double neuroticism;
+    public double openness;
+
+    public GDocsBigFiveQuestionManagerEntry(string id_)
+    {
+        id = id_;
+        reserved_rating_1 = -1;
+        trust_rating_2 = -1;
+        artistic_rating_5 = -1;
+        lazy_rating_3 = -1;
+        stress_rating_4 = -1;
+        sozial_rating_6 = -1;
+        fault_rating_7 = -1;
+        job_rating_8 = -1;
+        nervous_rating_9 = -1;
+        imagination_rating_10 = -1;
+
+        extraversion = -1.0;
+        agreeableness = -1.0;
+        conscientiousness = -1.0;
+        neuroticism = -1.0;
+        openness = -1.0;
+    }
+}
+
 public class BigFiveQuestionManager : MonoBehaviour {
 
     private string q = "I see myself as someone who ";
@@ -146,7 +189,7 @@ public class BigFiveQuestionManager : MonoBehaviour {
         }
         else
         {
-            // TODO: Save Questions
+            // Debug Output
             foreach (var q in questions)
             {
                 if (!personality.ContainsKey(q.personality))
@@ -156,10 +199,61 @@ public class BigFiveQuestionManager : MonoBehaviour {
 
             foreach (var item in personality)
             {
-                Debug.Log(item.Key.ToString() + ": "+ item.Value.ToString());
+                Debug.Log(item.Key.ToString() + ": " + item.Value.ToString());
             }
 
-            TestRunController.TriggerNextScene();
+            // Save to Gdocs
+
+            GDocsBigFiveQuestionManagerEntry entry = new GDocsBigFiveQuestionManagerEntry(TestRunController.id);
+
+            foreach(var q in questions)
+            {
+                switch(q.number)
+                {
+                    case 1:
+                        entry.reserved_rating_1 = q.rating;
+                        break;
+                    case 2:
+                        entry.trust_rating_2 = q.rating;
+                        break;
+                    case 3:
+                        entry.lazy_rating_3 = q.rating;
+                        break;
+                    case 4:
+                        entry.stress_rating_4 = q.rating;
+                        break;
+                    case 5:
+                        entry.artistic_rating_5 = q.rating;
+                        break;
+                    case 6:
+                        entry.sozial_rating_6 = q.rating;
+                        break;
+                    case 7:
+                        entry.fault_rating_7 = q.rating;
+                        break;
+                    case 8:
+                        entry.job_rating_8 = q.rating;
+                        break;
+                    case 9:
+                        entry.nervous_rating_9 = q.rating;
+                        break;
+                    case 10:
+                        entry.imagination_rating_10 = q.rating;
+                        break;
+                    default:
+                        Debug.Log("ERROR BIG 5 QUESTION MANAGER: Undefined question number!");
+                        break;
+                }
+            }
+
+            entry.agreeableness = personality[Personality.Agreeableness];
+            entry.conscientiousness = personality[Personality.Conscientiousness];
+            entry.extraversion = personality[Personality.Extraversion];
+            entry.neuroticism = personality[Personality.Neuroticism];
+            entry.openness = personality[Personality.Openness];
+
+            GameObject datamanager = GameObject.FindGameObjectWithTag("DataManagment");
+            datamanager.SendMessage("UploadBig5Questions", entry);
         }
     }
 
@@ -196,6 +290,11 @@ public class BigFiveQuestionManager : MonoBehaviour {
         UncheckAll();
         questions[activeQuestion].rating = 5;
         EnableConfirmButton();
+    }
+
+    public void QuestionManagerTriggerNextScene()
+    {
+        TestRunController.TriggerNextScene();
     }
 
 }

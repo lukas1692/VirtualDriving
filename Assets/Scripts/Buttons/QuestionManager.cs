@@ -22,6 +22,22 @@ struct Question
     }
 };
 
+public struct GDocsQuestionManagerEntry
+{
+    public string id;
+    public int round;
+    public int fun_rating;
+    public int skill_rating;
+
+    public GDocsQuestionManagerEntry(string id_, int round_, int fun_rating_, int skill_rating_)
+    {
+        id = id_;
+        round = round_;
+        fun_rating = fun_rating_;
+        skill_rating = skill_rating_;
+    }
+}
+
 public class QuestionManager : MonoBehaviour
 {
 
@@ -117,8 +133,31 @@ public class QuestionManager : MonoBehaviour
         }
         else
         {
-            // TODO: Save Questions
-            TestRunController.TriggerNextScene();
+            int fun = -1;
+            int skill = -1;
+            foreach(Question i in questions)
+            {
+                switch(i.number)
+                {
+                    case 1:
+                        fun = i.rating;
+                        break;
+                    case 2:
+                        skill = i.rating;
+                        break;
+                    default:
+                        Debug.Log("ERROR QUESTION MANAGER: Undefined question number!");
+                        break;
+                }
+            }
+
+
+            GDocsQuestionManagerEntry entry = new GDocsQuestionManagerEntry(TestRunController.id, TestRunController.GetCurrentRound(),
+                fun,skill);
+
+
+            GameObject datamanager = GameObject.FindGameObjectWithTag("DataManagment");
+            datamanager.SendMessage("UploadBetweenQuestions", entry);
         }
     }
 
@@ -170,4 +209,9 @@ public class QuestionManager : MonoBehaviour
         questions[activeQuestion].rating = 7;
         EnableConfirmButton();
     }
+
+    public void QuestionManagerTriggerNextScene()
+    {
+        TestRunController.TriggerNextScene();
+    }    
 }
