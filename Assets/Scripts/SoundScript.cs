@@ -36,13 +36,14 @@ public class SoundScript : MonoBehaviour {
 
 	}
     
-    public void setSoundRPM(float rpm)
+    public void SetSoundRPM(float rpm)
     {
         soundRPM = Mathf.RoundToInt(Mathf.Lerp(0, maxRPM, rpm / 1000));
     }
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void FixedUpdate()
+    {
         //Set Volume By Rpm's
         for (int i = 0; i < CarSounds.Count; i++)
         {

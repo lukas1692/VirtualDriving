@@ -17,7 +17,9 @@ public class CarSwitcher : MonoBehaviour
 	
 	void Update () 
     {
-		if (Input.GetKeyUp(KeyCode.K))	
+        Debug.Log("CarSwitcher");
+
+        if (Input.GetKeyUp(KeyCode.K))	
 		{
 			// Disable the previous vehicle.
 			vehicles[m_VehicleId].SetActive(false);

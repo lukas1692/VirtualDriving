@@ -27,6 +27,11 @@ public class TestRunController
 
     static public ScenarioNr visible_scene = ScenarioNr.START;
 
+    public static RaceType GetRaceType()
+    {
+        return race_type;
+    }
+
     public static void InitTestRunController(SceneIndicies indicies, RaceType type)
     {
         scene_indecies = indicies;

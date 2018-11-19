@@ -23,6 +23,8 @@ public class ThirdPersonCamera : MonoBehaviour {
 
     private void LateUpdate()
     {
+        Debug.Log("ThirdPersonCamerea");
+
         targetPosition = follow.position + follow.up * distanceUp + follow.forward * distanceAway;
 
         transform.position = targetPosition; // Vector3.Lerp(transform.position, targetPosition, smooth * Time.deltaTime);

@@ -27,6 +27,29 @@ struct InitQuestion
     }
 };
 
+public struct GDocsInitQuestionManagerEntry
+{
+    public string id;
+
+    public string race_type;
+
+    public int driving_skill;
+    public int videogame_experience;
+
+    public GDocsInitQuestionManagerEntry(string id_, RaceType type)
+    {
+        id = id_;
+        driving_skill = -1;
+        videogame_experience = -1;
+
+        if (type == RaceType.GHOST)
+            race_type = "GHOST";
+        else
+            race_type = "TIME";
+                
+    }
+};
+
 public class InitialQuestionManager : MonoBehaviour {
 
     private int activeQuestion = 0;
@@ -105,8 +128,26 @@ public class InitialQuestionManager : MonoBehaviour {
         }
         else
         {
+            GDocsInitQuestionManagerEntry entry = new GDocsInitQuestionManagerEntry(TestRunController.id, TestRunController.GetRaceType());
             // TODO: Save Questions
-            TestRunController.TriggerNextScene();
+            foreach (var q in questions)
+            {
+                switch(q.number)
+                {
+                    case 1:
+                        entry.driving_skill = q.rating;
+                        break;
+                    case 2:
+                        entry.videogame_experience = q.rating;
+                        break;
+                    default:
+                        Debug.Log("ERROR INITIAL QUESTION MANAGER: Undefined question number!");
+                        break;
+                }
+            }
+
+            GameObject datamanager = GameObject.FindGameObjectWithTag("DataManagment");
+            datamanager.SendMessage("UploadInitialQuestions", entry);
         }
     }
 
@@ -157,5 +198,10 @@ public class InitialQuestionManager : MonoBehaviour {
         UncheckAll();
         questions[activeQuestion].rating = 7;
         EnableConfirmButton();
+    }
+
+    public void QuestionManagerTriggerNextScene()
+    {
+        TestRunController.TriggerNextScene();
     }
 }

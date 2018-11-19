@@ -5,34 +5,34 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Start.unity
     guid: ad7620f9e4d83974ea7cae7b00b7b344
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/InitialQuestionnaire.unity
     guid: 7a1f744c296688c419dc66dcc8d4646c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/BigFive.unity
     guid: 10b78a9d065039e4499504f304606a4f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Instructions.unity
     guid: 69b7c9829688ee742ae26753dedd8256
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/EvaluationTrack.unity
     guid: 63ede6e076d5b7f46a09101cbc6b3e9d
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/LoadTrack.unity
     guid: 7e5aa444d2007234d95aa5545bd6836e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Racetrack1.unity
     guid: 8e54e516ec5251c42ba99eb07c07b062
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Racetrack2.unity
     guid: a2ce2714d63b233458b50b1ae4d06a0c
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/WheelOfEmotions.unity
     guid: 486e41f8ba1fef84a8d429dfe36b5359
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Questionnaire.unity
     guid: 0cb32461624da3449abba409c18d03f6
   - enabled: 1

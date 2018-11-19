@@ -148,7 +148,7 @@ public class WheelDrive : MonoBehaviour
         float angle = maxAngle * input_horizontal;
 		//float torque = maxTorque * Input.GetAxis("Vertical");
 
-		float handBrake = Input.GetKey(KeyCode.X) ? brakeTorque : 0;
+		//float handBrake = Input.GetKey(KeyCode.X) ? brakeTorque : 0;
 
         rpm = tractionWheel.rpm;
 
@@ -161,7 +161,7 @@ public class WheelDrive : MonoBehaviour
         engineRPM = Mathf.Round((rpm * gearRatio[currentGear]));
         torque = bhp * gearRatio[currentGear];
 
-        soundSript.setSoundRPM(rpm);
+        soundSript.SetSoundRPM(rpm);
 
         foreach (WheelCollider wheel in m_Wheels)
 		{
@@ -169,10 +169,10 @@ public class WheelDrive : MonoBehaviour
 			if (wheel.transform.localPosition.z > 0)
 				wheel.steerAngle = angle;
 
-			if (wheel.transform.localPosition.z < 0)
-			{
-				wheel.brakeTorque = handBrake;
-			}
+			//if (wheel.transform.localPosition.z < 0)
+			//{
+			//	wheel.brakeTorque = handBrake;
+			//}
 
 			//if (wheel.transform.localPosition.z < 0 && driveType != DriveType.FrontWheelDrive)
 			//{

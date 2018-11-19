@@ -84,7 +84,7 @@ public class LapTimeController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         currentTime = Time.time - startTime;
         if (firstlap)
