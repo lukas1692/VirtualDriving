@@ -285,13 +285,6 @@ public class BigFiveQuestionManager : MonoBehaviour {
         EnableConfirmButton();
     }
 
-    public void ClickButton5()
-    {
-        UncheckAll();
-        questions[activeQuestion].rating = 5;
-        EnableConfirmButton();
-    }
-
     public void QuestionManagerTriggerNextScene()
     {
         TestRunController.TriggerNextScene();

@@ -95,6 +95,8 @@ public class GoogleDocsController : MonoBehaviour
         StartCoroutine(PostBig5Questions(entry.id, entry.agreeableness, entry.conscientiousness, entry.extraversion, entry.neuroticism, entry.openness,
             entry.reserved_rating_1, entry.trust_rating_2, entry.lazy_rating_3, entry.stress_rating_4, entry.artistic_rating_5,
             entry.sozial_rating_6, entry.fault_rating_7, entry.job_rating_8, entry.nervous_rating_9, entry.imagination_rating_10));
+        //Debug.Log(entry.agreeableness);
+        //Debug.Log(entry.agreeableness);
     }
 
     IEnumerator PostBig5Questions(string id, double agreeableness, double conscientiousness, double extraversion, double neuroticism, double openness,

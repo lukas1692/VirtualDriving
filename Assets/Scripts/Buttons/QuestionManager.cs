@@ -189,27 +189,6 @@ public class QuestionManager : MonoBehaviour
         EnableConfirmButton();
     }
 
-    public void ClickButton5()
-    {
-        UncheckAll();
-        questions[activeQuestion].rating = 5;
-        EnableConfirmButton();
-    }
-
-    public void ClickButton6()
-    {
-        UncheckAll();
-        questions[activeQuestion].rating = 6;
-        EnableConfirmButton();
-    }
-
-    public void ClickButton7()
-    {
-        UncheckAll();
-        questions[activeQuestion].rating = 7;
-        EnableConfirmButton();
-    }
-
     public void QuestionManagerTriggerNextScene()
     {
         TestRunController.TriggerNextScene();
