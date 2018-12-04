@@ -38,13 +38,38 @@ struct BigFiveQuestion
     {
         if(inverse)
         {
-            return (6-rating) / 10.0f;
+            switch(rating)
+            {
+                case 1:
+                    return 0.5;
+                case 2:
+                    return 0.25;
+                case 3:
+                    return -0.25;
+                case 4:
+                    return -0.5;
+            }
+            //return (6-rating) / 10.0f;
+
         }
         else
         {
-            return rating / 10.0f;
+            switch (rating)
+            {
+                case 1:
+                    return -0.5;
+                case 2:
+                    return -0.25;
+                case 3:
+                    return 0.25;
+                case 4:
+                    return 0.5;
+            }
+            //return rating / 10.0f;
         }
+        return 0;
     }
+    
 };
 
 public struct GDocsBigFiveQuestionManagerEntry
@@ -114,16 +139,16 @@ public class BigFiveQuestionManager : MonoBehaviour {
 
         confirmButton = GameObject.FindGameObjectWithTag("ConfirmButton");
 
-        allquestions.Add(new BigFiveQuestion(1, "is reserved", false, Personality.Extraversion));
+        allquestions.Add(new BigFiveQuestion(1, "is reserved", true, Personality.Extraversion));
         allquestions.Add(new BigFiveQuestion(2, "is generally trusting", false, Personality.Agreeableness));
-        allquestions.Add(new BigFiveQuestion(3, "tends to be lazy", false,Personality.Conscientiousness));
-        allquestions.Add(new BigFiveQuestion(4, "is relaxed, handles stress well", false, Personality.Neuroticism));
-        allquestions.Add(new BigFiveQuestion(5, "has few artistic interests", false, Personality.Openness));
-        allquestions.Add(new BigFiveQuestion(6, "is outgoing, sociable", true, Personality.Extraversion));
+        allquestions.Add(new BigFiveQuestion(3, "tends to be lazy", true,Personality.Conscientiousness));
+        allquestions.Add(new BigFiveQuestion(4, "is relaxed, handles stress well", true, Personality.Neuroticism));
+        allquestions.Add(new BigFiveQuestion(5, "has few artistic interests", true, Personality.Openness));
+        allquestions.Add(new BigFiveQuestion(6, "is outgoing, sociable", false, Personality.Extraversion));
         allquestions.Add(new BigFiveQuestion(7, "tends to find fault with others", true, Personality.Agreeableness));
-        allquestions.Add(new BigFiveQuestion(8, "does a thorough job", true, Personality.Conscientiousness));
-        allquestions.Add(new BigFiveQuestion(9, "gets nervous easily", true, Personality.Neuroticism));
-        allquestions.Add(new BigFiveQuestion(10, "has an active imagination", true, Personality.Openness));
+        allquestions.Add(new BigFiveQuestion(8, "does a thorough job", false, Personality.Conscientiousness));
+        allquestions.Add(new BigFiveQuestion(9, "gets nervous easily", false, Personality.Neuroticism));
+        allquestions.Add(new BigFiveQuestion(10, "has an active imagination", false, Personality.Openness));
 
         Shuffle(allquestions);
 

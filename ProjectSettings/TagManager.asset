@@ -10,6 +10,9 @@ TagManager:
   - High
   - Medium
   - Low
+  - RadioButton
+  - Question
+  - ConfirmButton
   layers:
   - Default
   - TransparentFX
@@ -22,7 +25,7 @@ TagManager:
   - Car
   - Track
   - MiniMapSphere
-  - 
+  - GhostCar
   - 
   - 
   - 

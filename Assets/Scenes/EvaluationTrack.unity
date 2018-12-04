@@ -8,8 +8,9 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 63ede6e076d5b7f46a09101cbc6b3e9d
+  m_OcclusionCullingData: {fileID: 36300000, guid: fd3d9ea6ab9f5ad47858dc1e16e28c68,
+    type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -8708,6 +8709,34 @@ Prefab:
     - target: {fileID: 4646485602220674, guid: 632773a8ffa15394482bea43a536b968, type: 2}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892459211059716, guid: 632773a8ffa15394482bea43a536b968, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.5388887
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892459211059716, guid: 632773a8ffa15394482bea43a536b968, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.53888863
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892459211059716, guid: 632773a8ffa15394482bea43a536b968, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.4578199
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892459211059716, guid: 632773a8ffa15394482bea43a536b968, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.45781988
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892459211059716, guid: 632773a8ffa15394482bea43a536b968, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 99.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892459211059716, guid: 632773a8ffa15394482bea43a536b968, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 410.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892459211059716, guid: 632773a8ffa15394482bea43a536b968, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 138.09
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 632773a8ffa15394482bea43a536b968, type: 2}

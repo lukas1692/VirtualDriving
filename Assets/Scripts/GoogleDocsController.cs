@@ -92,25 +92,25 @@ public class GoogleDocsController : MonoBehaviour
     public void UploadBig5Questions(GDocsBigFiveQuestionManagerEntry entry)
     {
         Debug.Log("upload between big 5 to google docs");
-        StartCoroutine(PostBig5Questions(entry.id, entry.agreeableness, entry.conscientiousness, entry.extraversion, entry.neuroticism, entry.openness,
+        StartCoroutine(PostBig5Questions(entry.id, entry.agreeableness.ToString(), entry.conscientiousness.ToString(), entry.extraversion.ToString(), entry.neuroticism.ToString(), entry.openness.ToString(),
             entry.reserved_rating_1, entry.trust_rating_2, entry.lazy_rating_3, entry.stress_rating_4, entry.artistic_rating_5,
             entry.sozial_rating_6, entry.fault_rating_7, entry.job_rating_8, entry.nervous_rating_9, entry.imagination_rating_10));
-        //Debug.Log(entry.agreeableness);
+        Debug.Log(entry.agreeableness.ToString());
         //Debug.Log(entry.agreeableness);
     }
 
-    IEnumerator PostBig5Questions(string id, double agreeableness, double conscientiousness, double extraversion, double neuroticism, double openness,
+    IEnumerator PostBig5Questions(string id, string agreeableness, string conscientiousness, string extraversion, string neuroticism, string openness,
         int reserved_1, int trust_2, int lazy_3, int stress_4, int artistic_5,
         int sozial_6, int fault_7, int job_8, int nervous_9, int imagination_10)
     {
         string Base_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeC8D-taISJo1Lr--pIXr4vweYqlLuaB9ZPbu2388InmwKs_g/formResponse";
         WWWForm form = new WWWForm();
         form.AddField("entry.1426296430", id);
-        form.AddField("entry.345350860", agreeableness.ToString());
-        form.AddField("entry.1350764584", conscientiousness.ToString());
-        form.AddField("entry.188715868", extraversion.ToString());
-        form.AddField("entry.977959719", neuroticism.ToString());
-        form.AddField("entry.2102337265", openness.ToString());
+        form.AddField("entry.345350860", agreeableness);
+        form.AddField("entry.1350764584", conscientiousness);
+        form.AddField("entry.188715868", extraversion);
+        form.AddField("entry.977959719", neuroticism);
+        form.AddField("entry.2102337265", openness);
 
         form.AddField("entry.1097491537", reserved_1.ToString());
         form.AddField("entry.715410856", trust_2.ToString());
