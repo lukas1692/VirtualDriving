@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,9 @@ namespace UnityStandardAssets.Utility
         const string display = "{0} FPS";
         private Text m_Text;
 
+        //moving avg
+        private long m_sum_fps = 0;
+        private long m_sum_fps_count = 0;
 
         private void Start()
         {
@@ -33,6 +37,17 @@ namespace UnityStandardAssets.Utility
                 m_FpsNextPeriod += fpsMeasurePeriod;
                 m_Text.text = string.Format(display, m_CurrentFps);
             }
+        }
+
+        private void FixedUpdate()
+        {
+            if(m_CurrentFps > 5)
+            {
+                m_sum_fps += m_CurrentFps;
+                m_sum_fps_count++;
+                //Debug.Log(m_sum_fps / m_sum_fps_count);
+            }
+
         }
     }
 }

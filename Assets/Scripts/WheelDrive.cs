@@ -53,6 +53,8 @@ public class WheelDrive : MonoBehaviour
     public float gearUpRPM;
     public float gearDownRPM;
 
+    private int gear_lock = 0;
+
     public Text speedText;
 
     public Text currentGearText;
@@ -247,8 +249,8 @@ public class WheelDrive : MonoBehaviour
     void AutoGears()
     {
         // Reset RPM
-        if (engineRPM < 20)
-            currentGear = 0;
+        //if (engineRPM < 20)
+        //    currentGear = 0;
 
         int appropriateGear = currentGear;
 
@@ -263,22 +265,27 @@ public class WheelDrive : MonoBehaviour
                     break;
                 }
             }
-            currentGear = appropriateGear;
+            //currentGear = appropriateGear;
         }
-
         if (engineRPM <= gearDownRPM)
         {
             appropriateGear = currentGear;
             for (var j = gearRatio.Length - 1; j >= 0; j--)
             {
-                if (rpm * gearRatio[j] > gearDownRPM)
+                if (rpm * gearRatio[j] > gearDownRPM-10)
                 {
                     appropriateGear = j;
                     break;
                 }
             }
-            currentGear = appropriateGear;
+            //currentGear = appropriateGear;
         }
+        if(currentGear != appropriateGear)
+        {
+            currentGear = appropriateGear;
+
+        }
+        
     }
 
     void ResetCarToCheckPoint(bool input_reset)
@@ -312,11 +319,10 @@ public class WheelDrive : MonoBehaviour
         Vector3 position = rigid.position;
         Quaternion rotation = rigid.rotation;
         Vector3 velocity = rigid.velocity;
-       
+
+        AutoGears();
 
         GhostEvent ghost = new GhostEvent(rigid.position, rigid.rotation, LapTimeController.GetCurrentTime());
-
-        //Debug.Log(ghost.position + ", " + ghost.laptime);
 
         replayCarEventStream.Add(ghost);
 

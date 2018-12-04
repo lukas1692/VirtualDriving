@@ -83,6 +83,8 @@ public class StartScript : MonoBehaviour {
 
     private void Awake()
     {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.ForceSoftware);
+
         TestRunController.id = GenerateUniqueID();
         StartCoroutine(LoadIndexFile());
     }

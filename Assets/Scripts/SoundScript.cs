@@ -42,7 +42,7 @@ public class SoundScript : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         //Set Volume By Rpm's
         for (int i = 0; i < CarSounds.Count; i++)
