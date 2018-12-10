@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-struct Vector3Serializable
+public struct Vector3Serializable
 {
     public Vector3Serializable(Vector3 v)
     {

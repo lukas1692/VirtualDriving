@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.IO;
 
+using System.Collections;
+
 [Serializable]
 public enum DriveType
 {
@@ -53,7 +55,7 @@ public class WheelDrive : MonoBehaviour
     public float gearUpRPM;
     public float gearDownRPM;
 
-    private int gear_lock = 0;
+    private bool gear_lock = true;
 
     public Text speedText;
 
@@ -248,9 +250,6 @@ public class WheelDrive : MonoBehaviour
 
     void AutoGears()
     {
-        // Reset RPM
-        //if (engineRPM < 20)
-        //    currentGear = 0;
 
         int appropriateGear = currentGear;
 
@@ -280,12 +279,20 @@ public class WheelDrive : MonoBehaviour
             }
             //currentGear = appropriateGear;
         }
-        if(currentGear != appropriateGear)
+        if(currentGear != appropriateGear && gear_lock)
         {
             currentGear = appropriateGear;
 
+            gear_lock = false;
+            StartCoroutine(Wait(1));
         }
         
+    }
+
+    private IEnumerator Wait(float time)
+    {
+        yield return new WaitForSeconds(time);
+        gear_lock = true;
     }
 
     void ResetCarToCheckPoint(bool input_reset)
@@ -300,11 +307,15 @@ public class WheelDrive : MonoBehaviour
             currentGear = 0;
             tractionWheel.brakeTorque = Mathf.Infinity;
 
+            TestRunController.current_drive.AddResetpoints(transform.position, initialPosition);
+
             transform.rotation = initialRotation;
             transform.position = initialPosition;
 
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+            // Insert resettime to current drive
 
             foreach (WheelCollider wheel in m_Wheels)
             {
@@ -320,7 +331,7 @@ public class WheelDrive : MonoBehaviour
         Quaternion rotation = rigid.rotation;
         Vector3 velocity = rigid.velocity;
 
-        AutoGears();
+        //AutoGears();
 
         GhostEvent ghost = new GhostEvent(rigid.position, rigid.rotation, LapTimeController.GetCurrentTime());
 
@@ -341,19 +352,6 @@ public class WheelDrive : MonoBehaviour
 
         //setSpeedStrip(rigid.velocity.magnitude * 3.6);
     }
-
-    //public static void startNewGhost()
-    //{
-    //    replayGhostEventStream = new List<GhostEvent>(replayCarEventStream);
-    //    replayCarEventStream = new List<GhostEvent>();
-
-    //    //GhostCarScript.startGhost();
-    //}
-
-    //public static void clearGhostHistory()
-    //{
-    //    replayCarEventStream = new List<GhostEvent>();
-    //}
 
     public void SetSpeedStrip(double speed)
     {

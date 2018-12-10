@@ -7,6 +7,8 @@ public class Lap {
 
     public List<TimeStep> timestep = new List<TimeStep>();
     public List<CheckPoint> checkpoint = new List<CheckPoint>();
+    public List<KeyValuePair<Vector3Serializable, Vector3Serializable>> resetpoints = new List<KeyValuePair<Vector3Serializable, Vector3Serializable>>();
+
     public float laptime;
     public ScenarioType scene_type;
     public RaceType race_type;
@@ -79,5 +81,10 @@ public class Lap {
             }
         }
         return ret;
+    }
+
+    public void AddResetpoints(Vector3 position, Vector3 checkpoint)
+    {
+        resetpoints.Add(new KeyValuePair<Vector3Serializable, Vector3Serializable>(new Vector3Serializable(position), new Vector3Serializable(checkpoint)));
     }
 }

@@ -180,6 +180,34 @@ public class TestRunController
             return null;
     }
 
+    public static Lap GetBestLap()
+    {
+        if (race_type == RaceType.GHOST)
+            return null;
+
+        if (scenario_type == ScenarioType.TRAINING)
+            return null;
+
+        List<Lap> laps = run.lap.FindAll(x => x.scene_type == scenario_type);
+
+        if (laps.Count >= 1)
+        {
+            Lap ret = laps[0];
+
+            foreach(Lap lap in laps)
+            {
+                if(lap.laptime < ret.laptime)
+                {
+                    ret = lap;
+                }
+            }
+
+            return ret;
+        }
+        else
+            return null;
+    }
+
     public static void TriggerNextScene()
     {
         switch (visible_scene)

@@ -142,7 +142,7 @@ public class LoadSceneScript : MonoBehaviour {
         else
         {
             // Todo: load last round as ghost if available
-            lap = TestRunController.GetLastLap();
+            lap = TestRunController.GetBestLap();
             loading = false;
 
         }
