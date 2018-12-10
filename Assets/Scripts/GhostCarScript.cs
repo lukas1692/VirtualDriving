@@ -74,8 +74,8 @@ public class GhostCarScript : MonoBehaviour {
 
         TimeStep current = ghost_lap.timestep[ghostStreamIndex];
 
-        transform.parent.position = current.getPosition();
-        transform.parent.rotation = current.getRotation();
+        transform.parent.position = current.GetPosition();
+        transform.parent.rotation = current.GetRotation();
 
         ghostStreamIndex++;
 

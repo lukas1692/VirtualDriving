@@ -16,6 +16,9 @@ public class Lap {
     public string opponent_id;
     public int opponent_round;
 
+    public int max_fps;
+    public float avg_fps;
+
     public Lap(ScenarioType scene, RaceType race, int curent_mmr)
     {
         scene_type = scene;
@@ -45,7 +48,7 @@ public class Lap {
         {
             if(i%10 == 0)
             {
-                ret += timestep[i].positionToString();
+                ret += timestep[i].PositionToString();
             }   
         }
         return ret;

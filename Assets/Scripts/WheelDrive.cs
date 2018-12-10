@@ -327,8 +327,8 @@ public class WheelDrive : MonoBehaviour
         replayCarEventStream.Add(ghost);
 
         TimeStep step = new TimeStep();
-        step.setPosition(rigid.position);
-        step.setRotation(rigid.rotation);
+        step.SetPosition(rigid.position);
+        step.SetRotation(rigid.rotation);
         step.speed = currentSpeed;
         TestRunController.AddCurrentTimeStep(step);
 

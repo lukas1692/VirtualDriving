@@ -39,7 +39,7 @@ public class TimeStep {
     public float time;
     public float speed;
 
-    public string positionToString()
+    public string PositionToString()
     {
         string ret = "";
         ret += position.x.ToString("N1") + " ";
@@ -48,32 +48,32 @@ public class TimeStep {
         return ret;
     }
 
-    public Vector3 getPosition()
+    public Vector3 GetPosition()
     {
         return new Vector3(position.x, position.y, position.z);
     }
 
-    public void setPosition(Vector3 v)
+    public void SetPosition(Vector3 v)
     {
         position = new Vector3Serializable(v);
     }
 
-    public Vector3 getVelocity()
+    public Vector3 GetVelocity()
     {
         return new Vector3(velocity.x, velocity.y, velocity.z);
     }
 
-    public void setVelocity(Vector3 v)
+    public void SetVelocity(Vector3 v)
     {
         velocity = new Vector3Serializable(v);
     }
 
-    public Quaternion getRotation()
+    public Quaternion GetRotation()
     {
         return new Quaternion(rotation.x, rotation.y, rotation.z, rotation.w);
     }
 
-    public void setRotation(Quaternion q)
+    public void SetRotation(Quaternion q)
     {
         rotation = new QuaternionSerializable(q);
     }

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-
 public class TestRunController
 {
     static private int NR_OF_EVALUATIONRUNS = 2;
@@ -96,8 +95,13 @@ public class TestRunController
             current_drive.opponent_round = -1;
         }
 
+        // Get FPS count
+        GameObject fpscounter = GameObject.FindGameObjectWithTag("FPSCounter");
+        fpscounter.SendMessage("UpdateAverageFramerate");
 
-
+        Debug.Log("fps: ");
+        Debug.Log(current_drive.avg_fps);
+        Debug.Log(current_drive.max_fps);
 
         file_controller.SaveFile(current_drive);
 
@@ -107,15 +111,6 @@ public class TestRunController
         AudioListener.pause = true;
         Time.timeScale = 0f;
     }
-
-    //public static void TriggerNextScene()
-    //{
-    //    // called when upload is finished
-    //    SceneManager.LoadScene(ScenarioNr.WHEELOFEMOTIONS.ToString());
-    //    AudioListener.pause = false;
-    //    Time.timeScale = 1f;
-
-    //}
 
     public static int GetClosedGhost()
     {

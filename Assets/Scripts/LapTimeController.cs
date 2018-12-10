@@ -204,4 +204,14 @@ public class LapTimeController : MonoBehaviour
 
         LapTimeDifferenceTextField.text = "";
     }
+
+    public void UpdateAverageFPSCount(float avg_fps)
+    {
+        TestRunController.current_drive.avg_fps = avg_fps;
+    }
+
+    public void UpdateMaximumFPSCount(int max_fps)
+    {
+        TestRunController.current_drive.max_fps = max_fps;
+    }
 }

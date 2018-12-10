@@ -22,10 +22,11 @@ public class GoogleDocsController : MonoBehaviour
     {
         Debug.Log("uploaded lap to google docs");
 
-        StartCoroutine(PostRound(TestRunController.id, lap.round.ToString(), lap.PositionToString(), lap.TimeToString(), lap.SpeedToString(), lap.opponent_id, lap.opponent_round.ToString(), lap.mmr.ToString(), lap.scene_type.ToString()));
+        StartCoroutine(PostRound(TestRunController.id, lap.round.ToString(), lap.PositionToString(), lap.TimeToString(), lap.SpeedToString(), 
+            lap.opponent_id, lap.opponent_round.ToString(), lap.mmr.ToString(), lap.scene_type.ToString(), lap.avg_fps.ToString("N1"), lap.max_fps.ToString()));
     }
 
-    IEnumerator PostRound(string id, string round, string data, string time, string speed, string oppid, string oppround, string mmr, string type)
+    IEnumerator PostRound(string id, string round, string data, string time, string speed, string oppid, string oppround, string mmr, string type, string avg_fps, string max_fps)
     {
         // form action
         string Base_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd3ZX-85Qe4Qf40P0zyLBGGHSYeSrM5JvtAkw7WJLevuJu88A/formResponse";
@@ -39,6 +40,8 @@ public class GoogleDocsController : MonoBehaviour
         form.AddField("entry.1334400903", oppround);
         form.AddField("entry.747666729", mmr);
         form.AddField("entry.231219547", type);
+        form.AddField("entry.394157703", avg_fps);
+        form.AddField("entry.2140799325", max_fps);
         WWW www = new WWW(Base_URL, form.data);
         yield return www;
 
