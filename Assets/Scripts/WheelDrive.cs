@@ -307,7 +307,7 @@ public class WheelDrive : MonoBehaviour
             currentGear = 0;
             tractionWheel.brakeTorque = Mathf.Infinity;
 
-            TestRunController.current_drive.AddResetpoints(transform.position, initialPosition);
+            TestRunController.current_drive.AddResetpoints(LapTimeController.GetCurrentTime(), transform.position, initialPosition);
 
             transform.rotation = initialRotation;
             transform.position = initialPosition;
@@ -320,7 +320,6 @@ public class WheelDrive : MonoBehaviour
             foreach (WheelCollider wheel in m_Wheels)
             {
                 wheel.brakeTorque = Mathf.Infinity;
-                
             }
         }
     }
@@ -388,5 +387,13 @@ public class WheelDrive : MonoBehaviour
     {
         initialPosition = transform.position;
         initialRotation = transform.rotation;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Rail")
+        {
+            TestRunController.current_drive.AddRailContact(LapTimeController.GetCurrentTime(), transform.position);
+        }
     }
 }

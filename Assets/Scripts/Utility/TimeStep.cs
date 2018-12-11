@@ -12,6 +12,15 @@ public struct Vector3Serializable
     public float x;
     public float y;
     public float z;
+
+    override public string ToString()
+    {
+        string ret = "";
+        ret += x.ToString("N1") + " ";
+        ret += y.ToString("N1") + " ";
+        ret += z.ToString("N1");
+        return ret;
+    }
 }
 
 [System.Serializable]

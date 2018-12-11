@@ -3,11 +3,61 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+public struct Resetpoint
+{
+    public Resetpoint(float resettime, Vector3 resetpoint, Vector3 resetcheckpoint)
+    {
+        time = resettime;
+        point = new Vector3Serializable(resetpoint);
+        checkpoint = new Vector3Serializable(resetcheckpoint);
+    }
+
+    override public string ToString() 
+    {
+        string ret = "";
+
+        ret += time.ToString("N1") + " ";
+        ret += point.ToString() + " ";
+        ret += checkpoint.ToString();
+
+        return ret;
+    }
+
+    float time;
+    Vector3Serializable point;
+    Vector3Serializable checkpoint;
+}
+
+[System.Serializable]
+public struct RailContactPoint
+{
+    public RailContactPoint(float contacttime, Vector3 contactpoint)
+    {
+        time = contacttime;
+        point = new Vector3Serializable(contactpoint);
+    }
+
+    override public string ToString()
+    {
+        string ret = "";
+
+        ret += time.ToString("N1") + " ";
+        ret += point.ToString();
+
+        return ret;
+    }
+
+    float time;
+    Vector3Serializable point;
+}
+
+[System.Serializable]
 public class Lap {
 
     public List<TimeStep> timestep = new List<TimeStep>();
     public List<CheckPoint> checkpoint = new List<CheckPoint>();
-    public List<KeyValuePair<Vector3Serializable, Vector3Serializable>> resetpoints = new List<KeyValuePair<Vector3Serializable, Vector3Serializable>>();
+    public List<Resetpoint> resetpoints = new List<Resetpoint>();
+    public List<RailContactPoint> contactpoints = new List<RailContactPoint>();
 
     public float laptime;
     public ScenarioType scene_type;
@@ -83,8 +133,35 @@ public class Lap {
         return ret;
     }
 
-    public void AddResetpoints(Vector3 position, Vector3 checkpoint)
+    public void AddResetpoints(float time, Vector3 position, Vector3 checkpoint)
     {
-        resetpoints.Add(new KeyValuePair<Vector3Serializable, Vector3Serializable>(new Vector3Serializable(position), new Vector3Serializable(checkpoint)));
+        resetpoints.Add(new Resetpoint(time,position,checkpoint));
+    }
+
+    public void AddRailContact(float time, Vector3 position)
+    {
+        contactpoints.Add(new RailContactPoint(time, position));
+    }
+
+    public string ResetpointsToString()
+    {
+        string ret = "";
+
+        for (int i = 0; i < resetpoints.Count; i++)
+        {
+            ret += resetpoints[i].ToString() + " ";
+        }
+        return ret;
+    }
+
+    public string ContactpointsToString()
+    {
+        string ret = "";
+
+        for (int i = 0; i < contactpoints.Count; i++)
+        {
+            ret += contactpoints[i].ToString() + " ";
+        }
+        return ret;
     }
 }
