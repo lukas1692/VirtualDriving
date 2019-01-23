@@ -117,7 +117,7 @@ public struct GDocsBigFiveQuestionManagerEntry
 
 public class BigFiveQuestionManager : MonoBehaviour {
 
-    private string q = "I see myself as someone who ";
+    private string q = "";
 
     private int activeQuestion = 0;
 

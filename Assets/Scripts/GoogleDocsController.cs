@@ -137,6 +137,42 @@ public class GoogleDocsController : MonoBehaviour
         datamanager.SendMessage("QuestionManagerTriggerNextScene");
     }
 
+    public void UploadSensationSeekingQuestions(GDocsSensationSeekingQuestionManagerEntry entry)
+    {
+        Debug.Log("upload sensation seeking to google docs");
+        StartCoroutine(PostSensationSeekingQuestions(entry.id, entry.experienceseeking.ToString(), entry.disinhibition.ToString(), entry.boredomsusceptibility.ToString(), entry.thrillandadventureseeking.ToString(),
+            entry.strange_places_1, entry.restless_home_2, entry.frightening_things_3, entry.like_parties_4,
+            entry.no_preplanned_5, entry.friends_unpredictable_6, entry.try_bungee_7, entry.exciting_experiences_8));
+    }
+
+    IEnumerator PostSensationSeekingQuestions(string id, string experienceseeking, string disinhibition, string boredomsusceptibility, string thrillandadventureseeking,
+        int strange_places_1, int restless_home_2, int frightening_things_3, int like_parties_4, 
+        int no_preplanned_5, int friends_unpredictable_6, int try_bungee_7, int exciting_experiences_8)
+    {
+        string Base_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfrsh-x0mZ8MKc399XqUPSU0K_5-8lsUUW5-hsmtii5hH4bXQ/formResponse";
+        WWWForm form = new WWWForm();
+        form.AddField("entry.2146043283", id);
+        form.AddField("entry.2000490741", experienceseeking);
+        form.AddField("entry.304446421", disinhibition);
+        form.AddField("entry.2076963905", boredomsusceptibility);
+        form.AddField("entry.1390878193", thrillandadventureseeking);
+
+        form.AddField("entry.1176980851", strange_places_1.ToString());
+        form.AddField("entry.944243803", restless_home_2.ToString());
+        form.AddField("entry.68166701", frightening_things_3.ToString());
+        form.AddField("entry.1713868041", like_parties_4.ToString());
+        form.AddField("entry.1996145197", no_preplanned_5.ToString());
+        form.AddField("entry.137636894", friends_unpredictable_6.ToString());
+        form.AddField("entry.414252725", try_bungee_7.ToString());
+        form.AddField("entry.168783149", exciting_experiences_8.ToString());
+
+        WWW www = new WWW(Base_URL, form.data);
+        yield return www;
+
+        GameObject datamanager = GameObject.FindGameObjectWithTag("DataManagment");
+        datamanager.SendMessage("QuestionManagerTriggerNextScene");
+    }
+
     public void UploadInitialQuestions(GDocsInitQuestionManagerEntry entry)
     {
         Debug.Log("upload between initial questions to google docs");
