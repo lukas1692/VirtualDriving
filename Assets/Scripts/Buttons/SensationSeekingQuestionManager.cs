@@ -96,6 +96,9 @@ public class SensationSeekingQuestionManager : MonoBehaviour
 
     private GameObject confirmButton;
 
+    [SerializeField]
+    GameObject loading_circle;
+
     void Start()
     {
         radioButtons = GameObject.FindGameObjectsWithTag("RadioButton");
@@ -259,7 +262,15 @@ public class SensationSeekingQuestionManager : MonoBehaviour
 
     void EnableConfirmButton()
     {
+        loading_circle.SetActive(true);
+        StartCoroutine(WaitAndSetActive(1.0f));
+    }
+
+    private IEnumerator WaitAndSetActive(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
         confirmButton.SetActive(true);
+        loading_circle.SetActive(false);
     }
 
     void UncheckAll()

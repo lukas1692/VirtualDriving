@@ -149,17 +149,7 @@ public class LoadSceneScript : MonoBehaviour {
         
         //StartCoroutine(LoadAllScenes());
     }
-
-    // Use this for initialization
-    void Start ()
-    {
-
-    }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void StartRun()
     {

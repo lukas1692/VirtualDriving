@@ -40,15 +40,16 @@ public class WheelOfEmotionScript : MonoBehaviour
     [SerializeField]
     private GameObject load_spinner;
 
+    [SerializeField]
+    private GameObject legend1;
+
+    [SerializeField]
+    private GameObject legend2;
+
     private GameObject[] high;
     private GameObject[] medium;
     private GameObject[] low;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
 
     private void Awake()
     {
@@ -57,16 +58,12 @@ public class WheelOfEmotionScript : MonoBehaviour
         low = GameObject.FindGameObjectsWithTag(ButtonScript.tag_low);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void AcceptClicked()
     {
         load_spinner.SetActive(true);
         accept.SetActive(false);
+        legend1.SetActive(false);
+        legend2.SetActive(false);
 
         foreach (var h in high)
             h.SetActive(false);

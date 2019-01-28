@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class TestRunController
 {
     static private int NR_OF_EVALUATIONRUNS = 2;
+    static private int NR_LAST_ROUND = 6;
 
     static private TestRun run = new TestRun();
     //static public List<Lap> ghostlaps = new List<Lap>();
@@ -256,7 +257,7 @@ public class TestRunController
                     visible_scene = ScenarioNr.EVALUATIONTRACK;
                     SceneManager.LoadScene(ScenarioNr.EVALUATIONTRACK.ToString());
                 }
-                else if (run.GetCurrentRound() < 8)
+                else if (run.GetCurrentRound() < NR_LAST_ROUND)
                 {
                     // Set MMR when Evaluation is finished
                     CalculatedInitialMMR();

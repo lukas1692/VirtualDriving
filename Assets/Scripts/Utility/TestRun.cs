@@ -13,13 +13,30 @@ public class TestRun {
     public void SetRound(Lap new_lap)
     {
         round++;
-        laps.Add(new_lap);
+
+        List<Lap> l = laps.FindAll(x => x.scene_type == new_lap.scene_type);
+
+        float min_time = float.MaxValue; 
+
+        foreach (Lap lap in l)
+        {
+            if (lap.laptime < min_time)
+            {
+                min_time = lap.laptime;
+            }
+        }
+
+        if(min_time > new_lap.laptime)
+        {
+            laps.Add(new_lap);
+        }
+
     }
 
     public int GetCurrentRound()
     {
         Debug.Log("Round: " + round + laps.Count);
-        return laps.Count;
+        return round;
     }
 
     public List<Lap> GetLaps()
