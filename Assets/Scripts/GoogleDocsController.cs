@@ -193,4 +193,23 @@ public class GoogleDocsController : MonoBehaviour
         GameObject datamanager = GameObject.FindGameObjectWithTag("DataManagment");
         datamanager.SendMessage("QuestionManagerTriggerNextScene");
     }
+
+    public void UploadAgeQuestions(GDocsAgeQuestionManagerEntry entry)
+    {
+        Debug.Log("upload between age to google docs");
+        StartCoroutine(PostAgeQuestions(entry.id, entry.age));
+    }
+
+    IEnumerator PostAgeQuestions(string id, int age)
+    {
+        string Base_URL = "https://docs.google.com/forms/d/e/1FAIpQLSc31fN4_jTD4oG0rgBNuYZLlGvnoTyxKI3z8Ehj1Wd_nHV1Ow/formResponse";
+        WWWForm form = new WWWForm();
+        form.AddField("entry.810392353", id);
+        form.AddField("entry.351840087", age);
+        WWW www = new WWW(Base_URL, form.data);
+        yield return www;
+
+        GameObject datamanager = GameObject.FindGameObjectWithTag("DataManagment");
+        datamanager.SendMessage("QuestionManagerTriggerNextScene");
+    }
 }

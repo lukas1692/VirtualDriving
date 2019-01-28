@@ -74,9 +74,20 @@ public class StartScript : MonoBehaviour {
         if(!loading)
         {
             button.gameObject.SetActive(true);
-            // TODO: RANDOM MODE
+
+            
+            if(Random.Range(0, 2) == 0)
+            {
+                text2.text = "GHOST";
+                TestRunController.InitTestRunController(index_file, RaceType.GHOST);
+            }
+            else
+            {
+                text2.text = "TIME";
+                TestRunController.InitTestRunController(index_file, RaceType.TIME);
+            }
             //TestRunController.InitTestRunController(index_file, RaceType.GHOST);
-            TestRunController.InitTestRunController(index_file, RaceType.TIME);
+            
             loading = true;
         }
     }
@@ -92,13 +103,8 @@ public class StartScript : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-
+        Application.targetFrameRate = -1;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void StartRun()
     {

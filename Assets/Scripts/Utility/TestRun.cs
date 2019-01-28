@@ -5,12 +5,25 @@ using UnityEngine;
 public class TestRun {
 
 
-    public List<Lap> lap = new List<Lap>();
+    private List<Lap> laps = new List<Lap>();
     public string modus;
     public int currentmmr;
+    private int round = 0;
+
+    public void SetRound(Lap new_lap)
+    {
+        round++;
+        laps.Add(new_lap);
+    }
 
     public int GetCurrentRound()
     {
-        return lap.Count;
+        Debug.Log("Round: " + round + laps.Count);
+        return laps.Count;
+    }
+
+    public List<Lap> GetLaps()
+    {
+        return laps;
     }
 }

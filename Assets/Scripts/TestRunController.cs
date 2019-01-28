@@ -9,7 +9,7 @@ public class TestRunController
     static private int NR_OF_EVALUATIONRUNS = 2;
 
     static private TestRun run = new TestRun();
-    static public List<Lap> ghostlaps = new List<Lap>();
+    //static public List<Lap> ghostlaps = new List<Lap>();
 
     static public Lap current_ghost;
     static public Lap current_drive = new Lap(ScenarioType.TRAINING, RaceType.GHOST, -1);
@@ -45,7 +45,7 @@ public class TestRunController
 
     public static void AddNewGhostLap(Lap lap)
     {
-        ghostlaps.Add(lap);
+        //ghostlaps.Add(lap);
         current_ghost = lap;
     }
 
@@ -75,7 +75,8 @@ public class TestRunController
     {
         current_drive.AddCheckpoints(checkpoints);
         current_drive.laptime = LapTimeController.GetCurrentTime();
-        run.lap.Add(current_drive);
+        //run.lap.Add(current_drive);
+        run.SetRound(current_drive);
         current_drive.round = GetCurrentRound();
         current_drive.myid = id;
 
@@ -116,7 +117,7 @@ public class TestRunController
     {
         if (race_type == RaceType.TIME)
             return -1;
-        if (scenario_type == ScenarioType.TRAINING)
+        if (GetCurrentRound() < 3)
             return -1;
         if (scene_indecies == null)
             return -1;
@@ -165,20 +166,20 @@ public class TestRunController
         return ra;
     }
 
-    public static Lap GetLastLap()
-    {
-        if (race_type == RaceType.GHOST)
-            return null;
+    //public static Lap GetLastLap()
+    //{
+    //    if (race_type == RaceType.GHOST)
+    //        return null;
 
-        int index = run.lap.FindLastIndex(x => x.scene_type == scenario_type);
-        if (index > -1)
-        {
-            Lap lap = run.lap[index];
-            return lap;
-        }
-        else
-            return null;
-    }
+    //    int index = run.lap.FindLastIndex(x => x.scene_type == scenario_type);
+    //    if (index > -1)
+    //    {
+    //        Lap lap = run.lap[index];
+    //        return lap;
+    //    }
+    //    else
+    //        return null;
+    //}
 
     public static Lap GetBestLap()
     {
@@ -188,7 +189,7 @@ public class TestRunController
         if (scenario_type == ScenarioType.TRAINING)
             return null;
 
-        List<Lap> laps = run.lap.FindAll(x => x.scene_type == scenario_type);
+        List<Lap> laps = run.GetLaps().FindAll(x => x.scene_type == scenario_type);
 
         if (laps.Count >= 1)
         {
@@ -217,6 +218,14 @@ public class TestRunController
                 SceneManager.LoadScene(ScenarioNr.BIGFIVE.ToString());
                 break;
             case ScenarioNr.BIGFIVE:
+                visible_scene = ScenarioNr.AGE;
+                SceneManager.LoadScene(ScenarioNr.AGE.ToString());
+                break;
+            case ScenarioNr.AGE:
+                visible_scene = ScenarioNr.SENSATIONSEEKING;
+                SceneManager.LoadScene(ScenarioNr.SENSATIONSEEKING.ToString());
+                break;
+            case ScenarioNr.SENSATIONSEEKING:
                 visible_scene = ScenarioNr.INITIALQUESTIONNAIRE;
                 SceneManager.LoadScene(ScenarioNr.INITIALQUESTIONNAIRE.ToString());
                 break;
@@ -299,7 +308,7 @@ public class TestRunController
             return;
         }
 
-        var personal_trainings = run.lap.FindAll(x => x.scene_type == ScenarioType.TRAINING);
+        var personal_trainings = run.GetLaps().FindAll(x => x.scene_type == ScenarioType.TRAINING);
         float personal_best_laptime = float.MaxValue;
         if (personal_trainings.Count == 0)
         {

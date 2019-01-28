@@ -118,7 +118,7 @@ public class LoadSceneScript : MonoBehaviour {
             if (lap != null)
             {
                 TestRunController.AddNewGhostLap(lap);
-                text.text = "opponent mmr = " + lap.mmr.ToString();
+                text.text = "opponent mmr = " + lap.mmr.ToString() + " current mmr = " + TestRunController.mmr.ToString();
             }
             else
             {

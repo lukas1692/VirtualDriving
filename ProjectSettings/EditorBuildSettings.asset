@@ -21,6 +21,12 @@ EditorBuildSettings:
     path: Assets/Scenes/BigFive.unity
     guid: 10b78a9d065039e4499504f304606a4f
   - enabled: 1
+    path: Assets/Scenes/Age.unity
+    guid: 1aebdb6d10dcc1149a7872673858d084
+  - enabled: 1
+    path: Assets/Scenes/SensationSeeking.unity
+    guid: 17f0d41a5ebd1c441b37d9841712ec77
+  - enabled: 1
     path: Assets/Scenes/Instructions.unity
     guid: 69b7c9829688ee742ae26753dedd8256
   - enabled: 1
