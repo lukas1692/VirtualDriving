@@ -46,6 +46,9 @@ public class WheelOfEmotionScript : MonoBehaviour
     [SerializeField]
     private GameObject legend2;
 
+    [SerializeField]
+    private GameObject legend3;
+
     private GameObject[] high;
     private GameObject[] medium;
     private GameObject[] low;
@@ -64,6 +67,7 @@ public class WheelOfEmotionScript : MonoBehaviour
         accept.SetActive(false);
         legend1.SetActive(false);
         legend2.SetActive(false);
+        legend3.SetActive(false);
 
         foreach (var h in high)
             h.SetActive(false);

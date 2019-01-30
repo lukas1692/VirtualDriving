@@ -1026,7 +1026,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'You should be able Drive around without experiencing any issues or lag.
+  m_Text: 'You should be able to drive around without experiencing any issues or lag.
 
 
     Movement:  WASD / Arrow keys

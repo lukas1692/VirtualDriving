@@ -96,6 +96,8 @@ public class WheelDrive : MonoBehaviour
     private Vector3 initialPosition;
     private Quaternion initialRotation;
 
+    private Rigidbody rigidbody;
+
     // Find all the WheelColliders down in the hierarchy.
 
     private void Awake()
@@ -111,6 +113,8 @@ public class WheelDrive : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
 
         m_Wheels = GetComponentsInChildren<WheelCollider>();
+
+        rigidbody = GetComponent<Rigidbody>();
 
 		for (int i = 0; i < m_Wheels.Length; ++i) 
 		{
@@ -160,7 +164,7 @@ public class WheelDrive : MonoBehaviour
         ResetCarToCheckPoint(input_reset);
         Accelerate(input_vertical);
 
-        currentSpeed = GetComponent<Rigidbody>().velocity.magnitude * 3.6f;
+        currentSpeed = rigidbody.velocity.magnitude * 3.6f;
         
         engineRPM = Mathf.Round((rpm * gearRatio[currentGear]));
         torque = bhp * gearRatio[currentGear];

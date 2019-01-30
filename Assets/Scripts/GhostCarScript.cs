@@ -36,9 +36,9 @@ public class GhostCarScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        foreach (WheelCollider wheel in m_Wheels)
+        if (wheelShape)
         {
-            if (wheelShape)
+            foreach (WheelCollider wheel in m_Wheels)
             {
                 Quaternion q;
                 Vector3 p;

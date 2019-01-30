@@ -1324,7 +1324,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 960, y: 540}
+  m_ReferenceResolution: {x: 800, y: 540}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -3890,6 +3890,7 @@ MonoBehaviour:
   load_spinner: {fileID: 97067704}
   legend1: {fileID: 550039913}
   legend2: {fileID: 777029231}
+  legend3: {fileID: 320691483}
 --- !u!114 &720544014
 MonoBehaviour:
   m_ObjectHideFlags: 0

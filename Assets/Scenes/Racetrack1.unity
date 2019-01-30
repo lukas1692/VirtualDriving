@@ -17634,6 +17634,14 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: -0.64
       objectReference: {fileID: 0}
+    - target: {fileID: 2042764, guid: 1a9dca02feba5a740a65aa80ccaa457e, type: 2}
+      propertyPath: far clip plane
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2042764, guid: 1a9dca02feba5a740a65aa80ccaa457e, type: 2}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a9dca02feba5a740a65aa80ccaa457e, type: 2}
   m_IsPrefabAsset: 0
