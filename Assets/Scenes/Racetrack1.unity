@@ -793,7 +793,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &61904923
 Transform:
   m_ObjectHideFlags: 0
@@ -17287,7 +17287,7 @@ Terrain:
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 10
   m_TreeMaximumFullLODCount: 10
-  m_DetailObjectDistance: 80
+  m_DetailObjectDistance: 60
   m_DetailObjectDensity: 0.004
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
@@ -17636,11 +17636,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2042764, guid: 1a9dca02feba5a740a65aa80ccaa457e, type: 2}
       propertyPath: far clip plane
-      value: 200
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 2042764, guid: 1a9dca02feba5a740a65aa80ccaa457e, type: 2}
       propertyPath: field of view
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 12496856, guid: 1a9dca02feba5a740a65aa80ccaa457e, type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a9dca02feba5a740a65aa80ccaa457e, type: 2}

@@ -20,15 +20,11 @@ public class StartScript : MonoBehaviour {
 
     [SerializeField]
     GameObject button;
-    
 
     IEnumerator LoadIndexFile()
     {
-
             string filePath = System.IO.Path.Combine(Application.streamingAssetsPath, "index.dat");
-
             text2.text = filePath;
-
             byte[] FileBytes = null;
 
             if (filePath.Contains("://"))
@@ -54,7 +50,6 @@ public class StartScript : MonoBehaviour {
             index_file = (SceneIndicies)bf.Deserialize(MS);
 
             loading = false;
-
         }
 
     public string GenerateUniqueID()
@@ -74,16 +69,18 @@ public class StartScript : MonoBehaviour {
         if(!loading)
         {
             button.gameObject.SetActive(true);
-
-            
-            if(Random.Range(0, 2) == 0)
+            float r = Random.Range(0.0f, 1.0f);
+            Debug.Log(r);
+            if (r >= 0.4)
             {
-                text2.text = "GHOST";
+                Debug.Log("GHOST");
+                text2.text = "GHOST = " + r;
                 TestRunController.InitTestRunController(index_file, RaceType.GHOST);
             }
             else
             {
-                text2.text = "TIME";
+                Debug.Log("TIME");
+                text2.text = "TIME = " + r;
                 TestRunController.InitTestRunController(index_file, RaceType.TIME);
             }
             //TestRunController.InitTestRunController(index_file, RaceType.GHOST);
